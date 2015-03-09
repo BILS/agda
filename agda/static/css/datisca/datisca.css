@@ -1,0 +1,45 @@
+#content.datisca-nodule_trans_blast table.parameters td {
+	padding-right: 1em;
+}
+
+#content.datisca-nodule_trans_blast table.blasthits {
+	min-width: 50em;
+}
+
+#content.datisca-nodule_trans_blast .domain-graphic {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* Domain graphics */
+div.domain-graphic {
+	margin-top: 10px;
+	height: 12px;
+}
+
+div.domain-graphic div.backbone {
+	border-bottom: 2px solid gray;
+}
+
+div.domain-graphic div.domain.good {
+	background-color: #5f950c;
+}
+
+div.domain-graphic div.domain.bad {
+	background-color: #b63d2f;
+}
+
+div.domain-graphic div.domain {
+	position: absolute;
+	height: 18px;
+	margin-top: -10px;
+	background-color: #63bae7;
+	color: white;
+	text-align: center;
+	font-size: smaller;
+	overflow: hidden;
+}
+
+div.domain-graphic div.domain .label {
+	margin-top: 2px;
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load agda_tags %}
+
+{% block title %}{{ block.super }} Delete job{% endblock title %}
+{% block content_title %}{% if ok_to_delete %} Confirm job deletion {% else %} Cannot delete job {% endif %}{% endblock content_title %}
+
+{% block content %}
+{% if not ok_to_delete %}
+	{% if job.user != user %}
+		<p>This job is not yours. 
+	{% else %}
+		{% if job.status == job_status.DELETED %}
+			<p>This job is deleted.
+		{% else %}
+			<p>Unknown error. Please contact {{ support_email|mailto_link }}.  
+		{% endif %}
+	{% endif %}
+{% else %}
+	<p>If you delete the job all its result files will be deleted and you will no longer 
+	be able to view the job in Agda.     
+	<table class="data">
+		<tr><td>Name:</td><td>{{ job.name }}</td></tr>
+		<tr><td>Tool:</td><td><a href="{{ job.tool.url }}">{{ job.tool.nickname }}</a></td></tr>
+		<tr><td>Status:</td><td>{{ job.status_name }}</td></tr>
+		<tr><td>Submission time:</td><td>{{ job.submission_date }}</td></tr>
+		<tr><td>Completion time:</td><td>{{ job.completion_date }}</td></tr>
+	</table>
+	<p>
+	<form method="POST">{% csrf_token %}<button type="submit">Confirm job deletion</button></form>
+{% endif %}
+{% endblock content %}
+

@@ -1,0 +1,66 @@
+{% extends "agda/tool-page.html" %}
+
+{% load url from future %}
+
+{% block title %}
+{{ block.super }}{% if job.status == job_status.finished %} Results {% else %} job {{ job.status_name|lower }}{% endif %}
+{% endblock title %}
+
+{% block content_title %}
+{{ block.super }}{% if job.status == job_status.finished %} Results {% else %} job <i>"{{job.name}}"</i> {{ job.status_name|lower }}{% endif %}
+{% endblock content_title %}
+
+{% block sidebar %}
+<h4>{{ tool.nickname }}&nbsp;job</h4>
+<ul class='sidebar-links'>
+{% if not job.user %}<li><a title="Take ownership of this job." href="{% url 'jobs.views.take_job' job.slug %}">Take</a></li>{% endif %}
+<li><a title="Delete this job and all result files." href="{% url 'jobs.views.delete_job' job.slug %}">Delete</a></li>
+</ul>
+{{ block.super }}
+{% endblock sidebar %}
+
+{% block content %}
+{% if job.status < job_status.accepted %}
+	{% if job.status == job_status.deleted %}
+		{% block content_deleted %}
+            <p>The job {% if job.status != job_status.failed %} is {% endif %} {{ job.status_name|lower }}.
+			<p>{{ job.reason }}
+		{% endblock content_deleted %}
+	{% else %}
+		{% block content_failed %}
+			<p>The job {% if job.status != job_status.failed %} is {% endif %} {{ job.status_name|lower }}.
+			<p>{{ job.reason }}
+		{% endblock content_failed %}
+	{% endif %}
+{% else %} 
+	{% if job.status < job_status.finished %}
+		{% block content_unfinished %}
+			<p>Your job {% if job.status == job_status.running %} is currently running. {% else %} has been accepted and is currently waiting to be run. {% endif %}
+			<p>Link to this page: <b><a href={{ request.build_absolute_uri }}>{{ request.build_absolute_uri }}</a></b> 
+			<p>Please come back to this page later to check the results. <span id="reload_countdown">
+			<script><!--
+			document.write(page_reload_countdown.msg({{ timeout }}));
+			page_reload_countdown($("#reload_countdown"), {{ timeout }} * 1000);
+			//--></script></span>
+			{% if user.is_validated %}
+				<p>You can also visit your <a href="{% url 'agda.list_jobs' %}">job list</a> page to see the status of all your jobs.  
+			{% endif %}
+			<p>Remember that anyone who has this link or the 
+			job ID can view your results, so keep it private and only share it with those you wish to see the results. 
+			<p>Your results will only remain on the server for as long as available storage permits, so be sure to download 
+			all important results before they are deleted.
+		{% endblock content_unfinished %}
+	{% else %}
+		{% block content_finished %}
+			{% if job.result_files %}
+			These are the result files:
+				<ul>
+					{% for name, path in job.result_files.items %}
+						<li><a href="{{ job.resultdir_url }}/{{ path }}">{{ path }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endblock content_finished %}
+	{% endif %}
+{% endif %}
+{% endblock content %}

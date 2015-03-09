@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Change email address{% endblock %}
+
+{% block content_title %}Change email address{% endblock %}
+
+{% block content %}
+
+<div>
+<P>You will receive an email when you submit the change.
+You need to follow the instructions in that email to confirm your email address change. 
+Until your email address is confirmed you can still login using your old email address, but your account will not have full privileges.
+</div>
+
+{% with "Change email address" as editform_submit_value %}
+  {% include "agda/editform.html" %}
+{% endwith %}
+
+{% endblock %}

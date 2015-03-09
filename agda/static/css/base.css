@@ -1,0 +1,262 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif, sans;
+	font-size: 9pt;
+	margin: 0;
+	padding: 0;
+}
+
+textarea {
+	font-size: 8pt;
+}
+
+a {
+	text-decoration: none;
+	color: #22d;
+}
+
+a:visited {
+	color: #44a;
+}
+
+a.current {
+	color: #20204f;
+}
+
+a.nohover:hover {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul.inline {
+	padding-left: 0px;
+	display: inline-block;
+}
+
+ul.inline li {
+	list-style-type: none;
+	display: inline;
+	margin-left: 1em;
+}
+
+.clear {
+	clear: both;
+	font-size: 0px;
+	line-height: 0px;
+}
+
+#canvas {
+	text-align: left;
+	min-width: 550px;
+	margin: 0 20px;
+	position: relative;
+}
+
+#head {
+	text-align: justify;
+	position: relative;
+	background: url('/static/images/head-rule.png') repeat-x scroll left
+		bottom white;
+}
+
+#site-logo {
+	float: left;
+}
+
+#bils-logo {
+	float: right;
+	margin-top: 1em;
+}
+
+#login {
+	margin: 0 1em 1px;
+	padding: 0 1.5em 0
+}
+
+#login li {
+	display: inline-block;
+	margin-right: 0.5em;
+	list-style-type: none;
+}
+
+#topbar ul {
+	bottom: 2px;
+	margin: 0;
+	position: absolute;
+	right: 1em;
+	white-space: nowrap;
+}
+
+#topbar li {
+	display: block;
+	float: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#topbar a {
+	display: block;
+	float: left;
+	padding: 0 1em;
+	font-weight: bold;
+}
+
+#home #nav-home a,#tools #nav-tools a,#help #nav-help a { //
+	background: url('/static/images/active-section.png') repeat-x scroll
+		left bottom white;
+}
+
+#columns>* {
+	vertical-align: top;
+}
+
+#messages {
+	width: 100%;
+	padding: 0;
+}
+
+#messages li {
+	list-style-type: none;
+	padding: 1ex 1em;
+	margin: 0;
+}
+
+#messages .debug {
+	background-color: #e1e9ff;
+}
+
+#messages .info {
+	background-color: #d4e1ff;
+}
+
+#messages .success {
+	background-color: #daeea3;
+}
+
+#messages .warning {
+	background-color: #ffed83;
+}
+
+#messages .error {
+	background-color: #ffbebe;
+}
+
+#sidebar {
+	padding: 0 2em 0 1em;
+}
+
+#sidebar ul {
+	max-width: 12em;
+	padding: 0;
+	margin: 0;
+}
+
+#sidebar li {
+	list-style-type: none;
+	margin: 0;
+	margin-bottom: 0.2em;
+	white-space: nowrap;
+}
+
+#sidebar h3,#sidebar h3 a {
+	margin-top: 1em;
+	margin-bottom: 0;
+	font-size: 9pt;
+}
+
+img.icon {
+	height: 1em;
+}
+
+.highlight-info {
+	background-color: #d4e1ff;
+}
+
+.highlight-warning {
+	background-color: #fff2a4;
+}
+
+.highlight-error {
+	color: #900;
+}
+
+.fixed-width {
+	font-family: Courier New, Fixed, monospace;
+}
+
+.important {
+	font-weight: bold;
+}
+
+.hidden {
+	display: none;
+}
+
+.small {
+	font-size: 75%;
+}
+
+.right {
+	text-align: right;
+}
+
+.error-label {
+	color: #b63d2f;
+}
+
+.success-label {
+	color: #538700;
+}
+
+img.icon {
+	height: 1em;
+}
+
+/* Domain graphics */
+div.domain-graphic {
+	margin-top: 10px;
+	height: 12px;
+}
+
+div.domain-graphic div.backbone {
+	border-bottom: 2px solid gray;
+}
+
+div.domain-graphic div.domain.good {
+	background-color: #5f950c;
+}
+
+div.domain-graphic div.domain.bad {
+	background-color: #b63d2f;
+}
+
+div.domain-graphic div.domain {
+	position: absolute;
+	height: 18px;
+	margin-top: -10px;
+	background-color: #63bae7;
+	color: white;
+	text-align: center;
+	font-size: smaller;
+	overflow: hidden;
+}
+
+div.domain-graphic div.domain .label {
+	margin-top: 2px;
+}
+
+table .row-icons {
+	padding-right: 1px;
+}
+
+table.data td,table.data th {
+	padding-right: 2ex;
+}
+
+table .row-icons a {
+	vertical-align: middle;
+	margin-left: 1ex;
+}

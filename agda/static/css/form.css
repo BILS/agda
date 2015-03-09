@@ -1,0 +1,125 @@
+/* For asterisks */
+.reqfield {
+	color: #b00;
+}
+
+.query-sequence {
+    width: 100%;
+}
+
+.editform {
+	margin-top: 1em;
+	background-color: #d3d3d3;
+	background-image: url("/static/images/bgfadegrey.gif");
+	background-repeat: repeat-x;
+	outline: 1px solid lightgrey;
+	padding: 1em 1em 0.5em;
+}
+
+.editform ul.icons {
+	display: inline-block;
+	padding: 0;
+	margin: 0.5em -0.4em;
+}
+
+.editform ul.icons li {
+	list-style-type: none;
+	display: inline;
+	padding-left: .8em;
+	margin: 0;
+}
+
+.editform ul.buttons {
+	display: block;
+	padding: 0.5em 0px;
+	margin-bottom: 0;
+}
+
+.editform ul.buttons li {
+	list-style-type: none;
+	display: inline;
+	padding-right: 2em;
+	margin: 0;
+}
+
+.editform tr.editfield td {
+	vertical-align: baseline;
+	white-space: nowrap;
+}
+
+.editform .editform .editlabel {
+	white-space: nowrap;
+	/* font-weight: bold; */
+}
+
+.editform .editlabel.fortextarea {
+	padding-top: 0.4em;
+}
+
+.editform .editvalue textarea {
+	vertical-align: top;
+}
+
+.editform ul.fieldlist {
+	padding: 0;
+}
+
+.editform ul.fieldlist>li {
+	list-style-type: none;
+	margin-top: 1em;
+}
+
+.editform h2 {
+	margin-top: 0px;
+}
+
+.editform input,.editform textarea { //
+	display: block;
+}
+
+.editform .multivalue,.editform .multivalue {
+	margin-top: 0.5em;
+}
+
+.editform .multivalue:first-child,.editform .multivalue:first-child {
+	margin-top: -0.5em;
+}
+
+.editform td.editlabel {
+	padding-right: 1em;
+}
+
+.editform .editcomment {
+	color: #3E5A47;
+	padding-bottom: 1em;
+}
+
+.editform tr.editfield-last td {
+	padding-bottom: 1em;
+}
+
+.editform ul.errorlist {
+	padding-left: 0;
+	margin: 0 0 1em;
+}
+
+.editform .editerror ul.errorlist {
+	padding-left: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.editform .errorlist {
+	color: #900;
+}
+
+.editform .errorlist>li {
+	list-style-type: none;
+}
+
+.editform .editerror input,.editform .editerror textarea {
+	background-color: #ffeded;
+}
+
+.editform .toggle_advanced td {
+	padding: 1em 0em;
+}

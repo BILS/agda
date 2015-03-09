@@ -1,0 +1,132 @@
+{% extends "base.html" %} 
+{% block title %}User profile for {{ user.name }}{% endblock title %} 
+{% block content_title %}{{ user.name }} user profile {% endblock content_title %} 
+{% block content %}
+
+<div class="editform">
+	<form method="post">
+		{% csrf_token %}
+		<h2>User information</h2>
+		<p>
+			You will receive an email confirmation to
+			<B> 
+			{% if user.valid %} {{ user.email }}
+			{% else %} {{ user.email_pending }}
+			{% endif %} 
+			</B>
+			when you save your changes.
+		<p>
+			Field marked with an asterisk (<SPAN CLASS="reqfield">*</SPAN>) are required.
+		<table class="fieldlist">
+			<col>
+			<col>
+			<col class="expand">
+			<tr>
+					<td class="editerror" colspan="3">
+					{% for e in form.non_field_errors %}
+						<div class="errorlist">{{ e }}</div>
+						<br>
+					{% endfor %}
+				</td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel"><span
+					title="This is also your login username.">Email address:</span></td>
+				<td class="editvalue" colspan="2">
+					<span title="This is also your login username.">{{ user.username }}</span> 
+					{% if user.valid %} &nbsp;&mdash;&nbsp; 
+					{% else %} <span class="highlight-error">Pending change to: {{ user.email_pending }}</span> &nbsp;&mdash;&nbsp; Not validated.
+					{% endif %}
+				</td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2"></td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel">Password:</td>
+				<td class="editvalue" colspan="2">Enabled &nbsp;&mdash;&nbsp;Change password</a></td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2"></td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel"
+					title="Separate login password for access to the Agda RESTful web service api.">Api
+					password:</td>
+				<td class="editvalue" colspan="2">
+					{% if profile.has_usable_api_password %} 
+					   <span title="Separate login password for access to the Agda RESTful web service api.">Enabled &nbsp;&mdash;&nbsp;</span> 
+					{% else %} 
+					   <span title="Separate login password for access to the Agda RESTful web service api.">Disabled</span> &nbsp;&mdash;&nbsp; 
+					{% endif %}
+				</td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2"></td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel"
+					title="Enables login without password and gives extended features.">Certificate subject:</td>
+				<td class="editvalue" colspan="2">
+				   {% if user.subject %} 
+					   <span title="Enables login without password and gives extended features.">{{ user.subject }}</span> &nbsp;&mdash;&nbsp; 
+				   {% else %} 
+					   <span class="highlight-error"><b>None registered</b></span>&nbsp;&mdash;&nbsp; 
+				   {% endif %}
+				</td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2"></td>
+			</tr>
+
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2"></td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel"><label for="id_first_name">First name</label>: 
+				{% if form.first_name.field.required %}<SPAN CLASS="reqfield">*</SPAN>{% endif %}</td>
+				<td class="editvalue">{{ form.first_name }}</td>
+				<td class="editerror">
+				   {% for e in form.first_name.errors %}
+					   <div class="errorlist">{{ e }}</div>
+				   {% endfor %}
+				</td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2">{{ form.first_name.help_text }}</td>
+			</tr>
+
+			<tr class="editfield">
+				<td class="editlabel"><label for="id_last_name">Last name</label>: 
+				    {% if form.last_name.field.required %}<SPAN CLASS="reqfield">*</SPAN>{% endif %}
+			    </td>
+				<td class="editvalue">{{ form.last_name }}</td>
+				<td class="editerror">
+				   {% for e in form.last_name.errors %}
+					   <div class="errorlist">{{ e }}</div>
+				   {% endfor %}
+				</td>
+			</tr>
+			<tr class="editfield-last">
+				<td></td>
+				<td class="editcomment" colspan="2">{{ form.last_name.help_text }}</td>
+			</tr>
+
+			<tr>
+				<td colspan="2" class="editsubmit"><input type="submit" value="Save changes" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+{% endblock content %}

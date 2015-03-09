@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} {{ package.nickname }}{% endblock title %}
+{% block content_title %}{{ package.nickname }}{% endblock content_title %}
+{% block content-class %}{{ block.super }} {{ package.css_name }}{% endblock content-class %}
+
+{% block sidebar %}
+{% if package %}
+<h4><a title="{{ package.description }}" href="{{ package.url }}">{{ package.nickname }}</a></h4>
+<ul class='sidebar-links'>
+{% block sidebar_package_menuitems %}
+    {% for tool in package_tools %}
+        <li><a title="{{ tool.description }}" href="{{ tool.url }}">{{ tool.nickname }}</a></li>
+    {% endfor %}
+{% endblock sidebar_package_menuitems %}
+</ul>
+{% endif %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="description">{{ package.description }}</div> 
+{% endblock content %}
+

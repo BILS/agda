@@ -1,0 +1,55 @@
+/*! project specific CSS goes here. */
+
+/* This is used in bootstrap per default as well. */
+body {
+    padding-top: 80px;
+}
+
+.navbar-brand img {
+    position: relative;
+    top: -2px;
+}
+
+a.nohover:hover {
+	text-decoration: none;
+}
+
+#messages {
+	width: 100%;
+	padding: 0;
+}
+
+#messages li {
+	list-style-type: none;
+	padding: 1ex 1em;
+	margin: 0;
+}
+
+#messages .debug {
+	background-color: #e1e9ff;
+}
+
+#messages .info {
+	background-color: #d4e1ff;
+}
+
+#messages .success {
+	background-color: #daeea3;
+}
+
+#messages .warning {
+	background-color: #ffed83;
+}
+
+#messages .error {
+	background-color: #ffbebe;
+}
+
+ul.sidebar-links {
+    list-style: none outside none;
+    padding-left: 1em;
+}
+
+ul.sidebar-links li {
+    display: block;
+}

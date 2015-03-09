@@ -1,0 +1,51 @@
+/* Scan results */
+.family-list, .family-list ul {
+	padding-left: 0px;
+}
+
+.family-list li {
+	list-style-type: none;
+}
+
+.family {
+	margin-bottom: 1em;
+	background-color: #f9f9f9;
+}
+
+.family h3 {
+	padding: 3px;
+	background-color: #d7e9a1;
+	margin-bottom: 3px;
+}
+
+.weak_hits .family h3 {
+	background-color: #dadada;
+}
+
+.family h3 .description {
+	font-weight: normal;
+	padding-left: 15px;
+}
+
+.hit-list {
+	padding-top: 1em;
+}
+
+div.domain-graphic {
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+
+/* Domain graphics */
+div.domain-graphic div.domain.member {
+	background-color: #5f950c;
+}
+
+div.domain-graphic div.domain {
+	background-color: #b63d2f;
+	color: white;
+	text-align: center;
+	font-size: smaller;
+	overflow: hidden;
+}

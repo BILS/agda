@@ -1,0 +1,22 @@
+Dear {{ user.first_name }} {{ user.last_name }},
+
+You have recently created a new user at Agda.  To complete this
+procedure and make the user valid, you need to confirm your email
+address
+
+{{ user.email_pending }}
+
+Confirm it at the following URL within 24 hours:
+
+{{ user.get_email_confirmation_url }}
+
+NOTE: if you did not create a new Agda user recently,
+do not visit the URL above. Instead, please forward this email to
+abuse@nsc.liu.se for investigation.
+
+
+This email was sent automatically by Agda.
+-- 
+National Supercomputer Centre
+http://www.nsc.liu.se/
+support@nsc.liu.se

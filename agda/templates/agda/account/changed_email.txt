@@ -1,0 +1,18 @@
+{% autoescape off %}Dear {{ user.name }},
+
+you have recently changed your contact information in Agda:
+
+User ID: {{ user.id }}
+
+{{ change_report }}
+
+NOTE: if you did not change your contact information in Agda
+recently, please forward this email to abuse@nsc.liu.se for
+investigation.
+
+
+This email was sent automatically by Agda.
+-- 
+National Supercomputer Centre
+http://www.nsc.liu.se/
+support@nsc.liu.se{% endautoescape %}

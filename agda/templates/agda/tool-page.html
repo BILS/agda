@@ -1,0 +1,19 @@
+{% extends "agda/package-page.html" %}
+
+{% block title %}{{ block.super }} {{ tool.nickname }}{% endblock title %}
+{% block content_title %}{{ tool.nickname }}{% endblock content_title %}
+{% block content-class %}{{ block.super }} {{ tool.css_name }}{% endblock content-class %}
+
+{% block sidebar %}
+<h4>{{ tool.nickname }}</h4>
+<ul class='sidebar-links'>
+<li><a title="{{ tool.description }}" href="{{ tool.url }}">Submit new job</a></li>
+<li><a title="Help with the {{ tool.nickname }} tool." href="{{ tool.url }}help/">Help</a></li>
+</ul>
+{{ block.super }}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="description">{{ tool.description }}</div> 
+{% endblock content %}
+

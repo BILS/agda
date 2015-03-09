@@ -1,0 +1,19 @@
+{% autoescape off %}Dear {{ user.name }},
+
+you have now successfully created your new account in Agda.
+
+Using Agda you can also view and update your contact information, 
+and of course run bioinformatic applications and view results from
+finished jobs.
+
+We will continue to add functionality, so please visit NSC Express
+from time to time, at:
+
+{{ agda_url }}
+
+
+This email was sent automatically by Agda.
+-- 
+National Supercomputer Centre
+http://www.nsc.liu.se/
+support@nsc.liu.se{% endautoescape %}

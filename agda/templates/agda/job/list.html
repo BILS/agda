@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load agda_tags %}
+
+{% block title %}Jobs{% endblock title %}
+{% block content_title %}My jobs{% endblock content_title %}
+
+{% block content %}
+<form action="{% url 'jobs.views.delete_jobs' %}" method="post">
+	{% csrf_token %}
+	<table class="table table-striped">
+	<tr>
+		<th></th>
+		<th>Results</th>
+		<th></th>
+		<th>Tool</th>
+		<th>Status</th>
+		<th>Submit</th>
+        {# <th>Start</th> #}
+		<th>End</th>
+	</tr>
+	{% for job in jobs %}
+	<tr>
+		<td><input name="slug" type="checkbox" value="{{ job.slug }}"></td>
+		<td>
+			<a href="{% url 'jobs.views.show_results' job.slug %}">{{ job.name|default:"Job" }}</a>
+		</td>
+		<td class="row-icons">
+            <a href="{% url 'jobs.views.rename_job' job.slug %}" title="Rename"><img src="{{ STATIC_URL }}images/edit/edit_16.png"></a>
+			<a href="{% url 'jobs.views.delete_job' job.slug %}" title="Delete"><img src="{{ STATIC_URL }}images/delete/delete_16.png"></a> 
+		</td>
+		<td><a href="{{ job.tool.url }}">{{ job.tool.nickname }}</a></td>
+		<td class="{% if job.status == job_status.finished %} success-label {% endif %}{% if job.status < 0 %} error-label {% endif %}">{{ job.status_name }}</td>
+		<td><span class="small">{{ job.submission_date|agda_date }}</span></td>
+        {# <td><span class="small">{{ job.start_date|agda_date }}</span></td> #}
+		<td><span class="small">{{ job.completion_date|agda_date }}</span></td>
+	</tr>
+	{% endfor %}
+	</table>
+	<p>Selected jobs: <input type="submit" value="Delete">  
+</form>
+{% endblock content %}

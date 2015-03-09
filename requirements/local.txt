@@ -1,0 +1,9 @@
+# Local development dependencies go here
+-r base.txt
+coverage==3.7.1
+django-discover-runner==1.0
+#Django Debug toolbar
+django-debug-toolbar==1.2.1
+#-e git+https://github.com/django-debug-toolbar/django-debug-toolbar.git@25ea0b4b33ae77ccaf12de5fdb467c9270d948ef#egg=django_debug_toolbar-dev
+Sphinx==1.2.2
+numpydoc==0.4

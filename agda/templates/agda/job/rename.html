@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load agda_tags %}
+
+{% block title %}{{ block.super }} Rename job{% endblock title %}
+{% block content_title %}{% if job.user == user %} Rename job {% else %} Cannot rename job {% endif %}{% endblock content_title %}
+
+{% block content %}
+{% if job.user != user %}
+	<p>This job is not yours. 
+{% else %}
+	{% include "agda/forms/table_form.html" with submit_button_text="Rename" %} 
+{% endif %}
+{% endblock content %}
+

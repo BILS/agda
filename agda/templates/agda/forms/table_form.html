@@ -1,0 +1,40 @@
+<div class="editform" {% if form_title %} title="{{ form_title }}" {% endif %}>
+{% if form_heading %}<h1>{{ form_heading }}</h1>{% endif %}
+{{ form_intro }}
+<form method="post" 
+	{% if form_id %} id="{{ form_id }}" {% endif %} 
+	{% if form_action %} action="{{ form_action }}" {% endif %} 
+	{% if form.is_multipart or form_contents.form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+{% csrf_token %}
+{% if not form_contents %}
+<ul class="errorlist">
+    {% for e in form.non_field_errors %}
+    <li>{{ e }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<table class="fieldlist">
+<colgroup>
+	<col><col width="100%">
+</colgroup>
+{% if form_contents %}
+	{% include "agda/forms/table_form_contents.html" %}
+{% else %}
+{% for field in form %}
+    {% include "agda/forms/table_form_field.html" with field=field %}
+{% endfor %}
+	<tr><td></td>
+		<td colspan="2">
+			<ul class="buttons">
+                {% if include_reset_button %}
+                <li><button type="reset" title="Reset all fields to default values">Reset</button></li>
+                {% endif %}
+			    <li><button type="submit" title="{{ submit_button_text|default:'Submit' }}">{{ submit_button_text|default:'Submit' }}</button></li>
+			</ul>
+		</td>
+	</tr>
+{% endif %}
+</table>
+
+</form>
+</div>

@@ -1,0 +1,120 @@
+{% load staticfiles %}
+{% load url from future %}
+{% load agda_tags %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block fulltitle %}BILS Tools Portal - {% block title %}{% endblock title %}{% endblock fulltitle %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BILS Tools Portal">
+<meta name="author" content="BILS: Bioinformatics and Infrastructure for Life Science">
+
+<!-- Le styles -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<!-- This file store project specific CSS -->
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
+<link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="{{ STATIC_URL }}scripts/agda.js" type="text/javascript"></script>
+
+{% block stylesheet %}{% endblock stylesheet %}
+<!-- Use this to quickly test CSS changes in a template,
+        then move to project.css -->
+{% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img alt="BILS logo" src="/static/images/bilslogo-small.jpg"> Tools Portal</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'agda.views.top' %}">Home</a></li>
+            <li><a href="{% url 'agda.views.contact' %}">Contact</a></li>
+          </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                {% if user.is_admin %}
+                    <li><a href="/admin">Admin</a></li>
+                {% endif %}
+                <li><a href="{% url 'jobs.views.list_jobs' %}">Jobs</a></li>
+                <li><a href="{% url 'profiles.views.account_edit' %}">{{ user.email }}</a></li>
+                <li><a href="{% url 'profiles.views.logout' %}">Log out</a></li> 
+                {% else %}
+                <li><a href="{% url 'agda.views.new_user' %}">New user</a></li>
+                <li><a href="{% url 'profiles.views.login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+        {% if messages %}
+        <div class="row">
+        <ul id="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-sm-3 col-md-3">
+                <h3>{% block sidebar_title %}Services{% endblock%}</h3>
+	            {% block sidebar %}
+	                <ul class='sidebar-links'>
+	                <li><a href="{% url 'agda.views.list_packages' %}">Packages</a></li>
+	                <li><a href="{% url 'agda.views.list_tools' %}">Tools</a></li>
+	                </ul>
+	            {% endblock sidebar %}
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <h3>{% block content_title %}{% endblock%}</h3>
+	            <div id="content" class="{% block content-class %}{% endblock content-class %}">{% block content %}{% endblock content %}</div>
+            </div>
+        </div>
+    </div>
+
+
+
+	<!-- /container -->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+	<!-- place project specific Javascript in this file -->
+	<script src="{% static 'js/project.js' %}"></script>
+
+	{% block extra_js %}{% endblock extra_js %}
+	   
+    {% block scripts %}
+    {% block agda_site_scripts %}
+     <script src="{{ STATIC_URL }}scripts/forms.js" type="text/javascript"></script>
+    {% endblock agda_site_scripts %}
+    {% block current_page_link_styler_script %}
+     <script src="{{ STATIC_URL }}scripts/current-page-link-styler.js" type="text/javascript"></script>
+    {% endblock current_page_link_styler_script %}
+    {% endblock scripts %}
+</body>
+</html>

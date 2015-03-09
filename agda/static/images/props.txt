@@ -1,0 +1,4 @@
+Icons by http://www.visualpharm.com/ :
+help
+star
+undo

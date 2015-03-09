@@ -1,0 +1,21 @@
+<div class="editform">
+{% if form_heading %}<h2>{{ form_heading }}</h2>{% endif %}
+<form method="post">{% csrf_token %}
+<table class="edittable">
+  <col><col><col class="expand">
+  <tr>
+    <td></td>
+    <td class="editerror" colspan="2">{% for e in form.non_field_errors %}<div class="errorlist">{{e}}</div><br>{% endfor %}</td>
+  </tr>
+{% for field in form %}
+  <tr>
+    <td class="editlabel">{{ field.label_tag }} {% if field.field.required %}<SPAN CLASS="reqfield">*</SPAN>{% endif %}</td>
+    <td class="editvalue">{{ field }}</td>
+    <td class="editerror">{% for e in field.errors %}<div class="errorlist">{{e}}</div><br>{% endfor %}</td>
+  </tr>
+  <tr class="editfield-last"><td></td><td colspan="2" class="editcomment">{{ field.help_text }}</td></tr> 
+{% endfor %}
+  <tr><td></td><td class="editsubmit"><input type="submit" value="{{ editform_submit_value|default:"Save Changes"}}" /></td><td></td></tr>
+</table>
+</form>
+</div>

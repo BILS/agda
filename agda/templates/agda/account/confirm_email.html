@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load agda_tags %}
+
+{% block title %}Confirm Email Address{% endblock %}
+
+{% block content_title %}Confirm Email Address{% endblock %}
+
+{% block content %}
+
+{% if code_ok %}
+    <P>Please confirm your email adress <B>{{ user.email_pending|mailto_link }}</B> using the button below.
+
+    <FORM method="POST">{% csrf_token %}
+      <INPUT TYPE="hidden" NAME="confirmed" VALUE="yes">
+      <INPUT TYPE="submit" VALUE="Confirm Email Address">
+    </FORM>
+{% else %}
+  <p>Your email address <B>could not be confirmed</B>. Perhaps you have already confirmed the address, or the confirmation code is wrong or too old?
+{% endif %}
+
+
+{% endblock %}

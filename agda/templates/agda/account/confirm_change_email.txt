@@ -1,0 +1,23 @@
+{% autoescape off %}Dear {{ user.first_name }} {{ user.last_name }},
+
+you have recently requested a change of your email address in Agda.
+
+Old address: {{ user.email }}
+New address: {{ user.email_pending }}
+
+This email is sent to your new address.  Please go to the following
+URL within a day to confirm it:
+
+{{ user.get_email_confirmation_url }}
+
+
+NOTE: if you did not request a change of your email address in Agda
+recently, do not visit the URL above. Instead, please forward this 
+email to abuse@nsc.liu.se for investigation.
+
+
+This email was sent automatically by Agda.
+-- 
+National Supercomputer Centre
+http://www.nsc.liu.se/
+support@nsc.liu.se{% endautoescape %}

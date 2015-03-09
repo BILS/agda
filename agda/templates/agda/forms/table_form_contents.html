@@ -1,0 +1,39 @@
+{% for item in form_contents %}
+	{% if item.type == 'field' %}
+		{% with item=item %}
+			{% include 'agda/forms/table_form_field.html' with field=item.field comment=item.comment example=item.example initial=item.initial help_url=item.help_url reset=item.reset advanced=item.advanced %}
+		{% endwith %}
+	{% endif %}
+	{% if item.type == 'text' %}
+    <tr class="{% if item.advanced %} advanced hidden {% endif %}">
+        <td colspan=3>{{ item.text }}</td>
+    </tr>
+	{% endif %}
+	{% if item.type == 'non_field_errors' %}
+    <tr>
+        <td colspan=3>
+            <ul class="errorlist">
+                {% for e in form_contents.form.non_field_errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+	{% endif %}
+	{% if item.type == 'advanced_field_display_toggle' %}
+    <tr class="toggle_advanced">
+        <td colspan=3><a onclick="toggle_display(this, 'table', 'tr.advanced')" href="javascript:void(0);" title="Click to show/hide advanced settings">Advanced settings</a></td>
+    </tr>
+	{% endif %}
+	{% if item.type == 'form_buttons' %}
+		<tr class="{% if item.advanced %} advanced hidden {% endif %}">
+			<td colspan="3">
+				<ul class="buttons">
+                    {% if include_reset_button %}
+                    <li><button type="reset" title="Reset all fields to default values">Reset</button></li>{% endif %}
+				    <li><button type="submit" title="{{ submit_button_text|default:'Submit' }}">{{ submit_button_text|default:'Submit' }}</button></li>
+				</ul>
+			</td>
+		</tr>
+	{% endif %}
+{% endfor %}

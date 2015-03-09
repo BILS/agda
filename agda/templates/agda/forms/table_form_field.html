@@ -1,0 +1,37 @@
+<tr class="editfield {% if advanced %} advanced hidden {% endif %}">
+    <td class="editlabel{% if field.field.widget.attrs.cols %} fortextarea{% endif %}" title="{{ field.help_text }}">
+        {% if field.label %}
+            {{ field.label_tag }}
+            {% if form.email.field.required %}
+                <SPAN CLASS="reqfield">*</SPAN>
+            {% endif %}
+        {% endif %}
+		{% if field.field.widget.attrs.cols %}
+			{% comment %} This field is a textarea, and has its icons under the label. {% endcomment %}
+			<div>
+			    <ul class="icons">
+			     {% if reset %}<li><a title="Revert to default value" href="javascript:void(0);" onClick="resetValues(this)"><img class="icon" src="{{ STATIC_URL }}images/undo/undo_16.png"></a></li>{% endif %}
+			     {% if example %}<li><a title="Use an example value" href="javascript:void(0);" onClick="resetValues(this, 'example')"><img class="icon" src="{{ STATIC_URL }}images/star/star_16.png"></a></li>{% endif %}
+			     {% if help_url %}<li><a title="Go to the help pages for this parameter"><img class="icon" src="{{ STATIC_URL }}images/help/help_16.png"></a></li>{% endif %}
+			    </ul>
+			</div>
+	   	{% endif %}
+  	</td>
+	<td class="editvalue {% if field.errors %} editerror {% endif %}" title="{{ field.help_text }}">
+		{% if field.errors %} 
+			<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul> 
+		{% endif %}
+		{{ field }}
+		<span class="hidden default">{{ initial }}</span>
+		<span class="hidden example">{{ example }}</span>
+		{% if not field.field.widget.attrs.cols %}
+			{% comment %} This field is not a textarea, and has its icons next to the field. {% endcomment %}
+		    <ul class="icons">
+		     {% if reset %}<li><a title="Revert to default value" href="javascript:void(0);" onClick="resetValues(this)"><img class="icon" src="{{ STATIC_URL }}images/undo/undo_16.png"></a></li>{% endif %}
+		     {% if example %}<li><a title="Use an example value" href="javascript:void(0);" onClick="resetValues(this, 'example')"><img class="icon" src="{{ STATIC_URL }}images/star/star_16.png"></a></li>{% endif %}
+		     {% if help_url %}<li><a title="Go to the help pages for this parameter"><img class="icon" src="{{ STATIC_URL }}images/help/help_16.png"></a></li>{% endif %}
+		    </ul>
+	   	{% endif %}
+	</td>
+</tr>
+{% if comment %}<tr><td></td><td colspan="2" class="editcomment {% if advanced %} advanced hidden {% endif %}">{{ comment }}</td></tr>{% endif %}

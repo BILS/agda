@@ -1,0 +1,19 @@
+# Put this text in your virtualenv bin/activate file
+# Fill in your local settings
+
+export AGDA_SECRET_KEY='Some random stuff'
+export AGDA_DB_ENGINE="django.db.backends.sqlite3" # or .mysql
+export AGDA_DB_NAME='database.sqlite'              # And change this as well
+export AGDA_DB_USER=''
+export AGDA_DB_PASS=''
+
+export AGDA_URL_BASE=""
+export AGDA_MAIL_FROM=""
+export AGDA_MAIL_WATCHERS=""
+export AGDA_CONFIRMATION_MAIL_SECRET=''
+
+export AGDA_AUTH_LDAP_BIND_PASSWORD=""
+export AGDA_AUTH_LDAP_SERVER_URI=""
+export AGDA_AUTH_LDAP_BIND_DN=""
+
+export DJANGO_SETTINGS_MODULE=agda.settings.local

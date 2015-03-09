@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load agda_tags %}
+
+{% block title %}User profile for {{ user.name }}{% endblock title %}
+
+{% block content_title %}{{ user.name }} User Profile {% endblock content_title %}
+
+{% block content %}
+
+<div class="editform">
+<form method="post">
+{% csrf_token %}
+<h1>User information</h1>
+<p>You will receive an email confirmation to <B>{{ user.email }}</B> when you save your changes.
+<p>Field marked with an asterisk (<SPAN CLASS="reqfield">*</SPAN>) are required. 
+<table class="fieldlist">
+  <col><col><col class="expand">
+  <tr>
+    <td class="editerror" colspan="3">
+	    {% for e in form.non_field_errors %}
+	        <div class="errorlist">{{ e }}</div><br>
+	    {% endfor %}
+    </td>
+  </tr>
+
+  <tr class="editfield">
+    <td class="editlabel"><span title="This is also your login username.">Email address:</span></td>
+    <td class="editvalue" colspan="2">
+    	<span title="This is your email.">{{ user.email }}</span> 
+    		&nbsp;&mdash;&nbsp;
+    		<a href="{% url 'profiles.views.account_change_email' %}">Change</a>
+    </td>
+  </tr>      
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2"></td></tr>
+
+  <tr class="editfield">
+    <td class="editlabel">Password:</td>
+    <td class="editvalue" colspan="2">Enabled &nbsp;&mdash;&nbsp; <a href="{% url 'profiles.views.account_change_password' %}">Change password</a></td>
+  </tr>
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2"></td></tr>
+
+  <tr class="editfield">
+    <td class="editlabel" title="Separate login password for access to the Agda RESTful web service api.">Api password:</td>
+    <td class="editvalue" colspan="2">
+    	{% if user.has_usable_api_password %}
+    		<span title="Separate login password for access to the Agda RESTful web service api.">Enabled &nbsp;&mdash;&nbsp;</span> 
+    		<a href="{% url 'profiles.views.account_api_password_reset' %}">Generate new</a> / 
+    		<a href="{% url 'profiles.views.account_api_password_disable' %}">Disable</a> 
+    	{% else %}
+    		<span title="Separate login password for access to the Agda RESTful web service api.">Disabled</span> &nbsp;&mdash;&nbsp; 
+    		<a href="{% url 'profiles.views.account_api_password_reset' %}">Generate new</a>
+    	{% endif %}
+    </td>
+  </tr>
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2"></td></tr>
+
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2"></td></tr>
+
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2"></td></tr>
+
+  <tr class="editfield">
+    <td class="editlabel"><label for="id_first_name">First name</label>: {% if form.first_name.field.required %}<SPAN CLASS="reqfield">*</SPAN>{% endif %}</td>
+    <td class="editvalue">{{ form.first_name }}</td>
+    <td class="editerror">{% for e in form.first_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</td>
+  </tr>      
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2">{{ form.first_name.help_text }}</td></tr>
+
+  <tr class="editfield">
+    <td class="editlabel"><label for="id_last_name">Last name</label>: {% if form.last_name.field.required %}<SPAN CLASS="reqfield">*</SPAN>{% endif %}</td>
+    <td class="editvalue">{{ form.last_name }}</td>
+    <td class="editerror">{% for e in form.last_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</td>
+  </tr>      
+  <tr class="editfield-last"><td></td><td class="editcomment" colspan="2">{{ form.last_name.help_text }}</td></tr>
+
+  <tr><td colspan="2" class="editsubmit"><input type="submit" value="Save changes" /></td></tr>
+</table>
+</form>
+</div>
+{% endblock content %}

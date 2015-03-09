@@ -1,0 +1,12 @@
+A new contact has been created in Agda:
+
+Account ID:    {{ user.id }}
+Name:          {{ user.name }}
+Email:         {{ user.email_pending }}
+
+
+This email was sent automatically by Agda.
+-- 
+National Supercomputer Centre
+http://www.nsc.liu.se/
+support@nsc.liu.se

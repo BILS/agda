@@ -1,0 +1,8 @@
+{% extends "agda/top.html" %} {% load i18n %} 
+{% block content %}
+{% include "agda/forms/table_form.html" with form_id="login_form" form_heading="Log in" submit_button_text="Log in" %}
+
+<p>
+	{% trans "Not a member" %}? <a href="https://accounts.bils.se/register/">{% trans "Register here" %}</a>!
+</p>
+{% endblock %}
