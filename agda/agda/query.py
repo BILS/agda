@@ -2,6 +2,8 @@ from django.db import models, connection
 from django.db.models.base import ModelBase
 from django.db.models.query import QuerySet
 
+from django.conf import settings
+
 from utils import get_columns, rows
 
 
@@ -137,6 +139,8 @@ def setup_fulltext_indexes(sender, **kw):
     fulltext_indexes should be a list of fields or field names, or a index name
     to field list dictionary to set up multiple named indexes.
     """
+    if settings.DATABASES['default']['ENGINE'] != 'django.db.backends.mysql':
+        return
     for name in dir(sender):
         model = getattr(sender, name)
         if not (isinstance(model, ModelBase) and hasattr(model, 'fulltext_indexes')):
