@@ -1,0 +1,30 @@
+{% extends "agda/tool-page.html" %}
+
+{% block title %}{{ block.super }}{% endblock title %}
+{% block page-title %}MDR family lookup{% endblock page-title %}
+
+{% block content %}
+<div class="editform">
+<form method="get" id="lookup-form">
+{% csrf_token %}
+<ul class="errorlist">{% for e in form_contents.form.non_field_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+<table class="fieldlist">
+<col><col><col width="100%">
+	{% for field in form %}{% include "agda/forms/table_form_field.html" with field=field %}{% endfor %}
+	<tr><td></td>
+		<td colspan="2">
+			<ul class="buttons">
+			  <li><button type="submit" title="Get MDR family">Go</button></li>
+			</ul>
+		</td>
+	</tr>
+</table>
+</form>
+<script> 
+	$("#lookup-form").submit(function () {
+		location.href = $('#id_family_id').val();
+		return false;
+	});
+</script>
+</div>
+{% endblock content %}

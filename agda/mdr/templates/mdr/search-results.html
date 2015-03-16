@@ -1,0 +1,19 @@
+{% extends "agda/tool-page.html" %}
+
+{% block title %}{{ tool.nickname }} Results{% endblock title %}
+{% block content_title %}{{ tool.nickname }}{% endblock content_title %}
+
+{% block stylesheet %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mdr/family-list.css" />
+{% endblock stylesheet %}
+
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}scripts/mdr/toggle-show-members.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}scripts/mdr/hit-counter.js"></script>
+{% endblock scripts %}
+
+{% block content %}
+{{ hits|safe }} 
+{% endblock content %}

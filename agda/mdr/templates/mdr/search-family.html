@@ -1,0 +1,73 @@
+{% load percentage %}
+<div class='family'>
+	<h4>{{ family.id }}{% if family.name %} - {{ family.name }} {% endif %}<span title="Description of a representative sequence">{{ family.representative_description }}</span></h4>
+	<div class="columns">
+		<div class="column">
+			<span class="property">Representative: <span><a href="http://www.uniprot.org/uniprot/{{ family.representative_id }}" target="_new">{{ family.representative_id }}</a></span></span>
+			<span class="property" title="Known member domains">Members: <span>{{ family.size }}</span></span>
+			<span class="property" title="Known member domains in Swiss-Prot">Swiss-Prot: <span>{{ family.swissprot_members }}</span></span>
+			<span class="property" title="Score range among known family domains">Member Scores: <span>{{ family.min_score|floatformat:2 }}&nbsp;&mdash;&nbsp;{{ family.max_score|floatformat:2 }}</span></span>
+			<span class="property" title="Average percent pairwise identities">PCID: <span>{{ family.average_pcid|floatformat:2 }}%</span></span>
+			<span class="property" title="Appears to bind Zn1 (catalytic)">Zn1: <span>{{ family.zn1|percentage }}</span></span>
+			<span class="property" title="Appears to bind Zn2 (structural)">Zn2: <span>{{ family.zn2|percentage }}</span></span>
+			<span class="property" title="Appears to bind NAD">NAD: <span>{{ family.nad|percentage }}</span></span>
+			<span class="property" title="Appears to bind NADP">NADP: <span>{{ family.nadp|percentage }}</span></span>
+		</div>
+		<div class="column">
+			<h3>Presence in kingdoms</h3>
+			<table cellspacing="0" class="kingdoms">
+				<tr>
+					<th><span title="Human">Human</span></th>
+					<th><span title="Eukaryota">Eukaryota</span></th>
+					<th><span title="Bacteria">Bacteria</span></th>
+					<th><span title="Archaea">Archaea</span></th>
+				</tr>
+				<tr>
+					{% if family.in_human %}<td title="Present in human." class="present">Y{% else %}<td title="Absent in human." class="absent">N{% endif %}</td>
+					{% if family.in_kingdom_eukaryota %}<td title="Present in eukaryota." class="present">Y{% else %}<td title="Absent in eukaryota." class="absent">N{% endif %}</td>
+					{% if family.in_kingdom_bacteria %}<td title="Present in bacteria." class="present">Y{% else %}<td title="Absent in bacteria." class="absent">N{% endif %}</td>
+					{% if family.in_kingdom_archaea %}<td title="Present in archaea." class="present">Y{% else %}<td title="Absent in archaea." class="absent">N{% endif %}</td>
+				</tr>
+			</table>
+		
+			<h3>Presence in taxonomic divisions</h3>
+			<table cellspacing="0" class="divisions">
+				<tr>
+					<th><span title="Unassigned">una</span></th>
+					<th><span title="Synthetic">syn</span></th>
+					<th><span title="Environmental samples">env</span></th>
+					<th><span title="Phages">pha</span></th>
+					<th><span title="Viruses">vir</span></th>
+					<th><span title="Bacteria">bct</span></th>
+					<th><span title="Plants">pla</span></th>
+					<th><span title="Invertebrates">inv</span></th>
+					<th><span title="Vertebrates">ver</span></th>
+					<th><span title="Mammals">mam</span></th>
+					<th><span title="Rodents">rod</span></th>
+					<th><span title="Primates">pri</span></th>
+				</tr>
+				<tr>
+					{% if family.in_division_unassigned %}<td title="Present in taxonomic division unassigned." class="present">Y{% else %}<td title="Absent in taxonomic division ." class="absent">N{% endif %}</td>
+					{% if family.in_division_synthetic %}<td title="Present in taxonomic division synthetic." class="present">Y{% else %}<td title="Absent in taxonomic division synthetic." class="absent">N{% endif %}</td>
+					{% if family.in_division_environmental_samples %}<td title="Present in taxonomic division environmental samples." class="present">Y{% else %}<td title="Absent in in taxonomic division environmental samples." class="absent">N{% endif %}</td>
+					{% if family.in_division_phages %}<td title="Present in taxonomic division phages." class="present">Y{% else %}<td title="Absent in taxonomic division phages." class="absent">N{% endif %}</td>
+					{% if family.in_division_viruses %}<td title="Present in taxonomic division viruses." class="present">Y{% else %}<td title="Absent in taxonomic division viruses." class="absent">N{% endif %}</td>
+					{% if family.in_division_bacteria %}<td title="Present in taxonomic division bacteria." class="present">Y{% else %}<td title="Absent in taxonomic division bacteria." class="absent">N{% endif %}</td>
+					{% if family.in_division_plants %}<td title="Present in taxonomic division plants." class="present">Y{% else %}<td title="Absent in taxonomic division plants." class="absent">N{% endif %}</td>
+					{% if family.in_division_invertebrates %}<td title="Present in taxonomic division invertebrates." class="present">Y{% else %}<td title="Absent in taxonomic division invertebrates." class="absent">N{% endif %}</td>
+					{% if family.in_division_vertebrates %}<td title="Present in taxonomic division vertebrates." class="present">Y{% else %}<td title="Absent in taxonomic division vertebrates." class="absent">N{% endif %}</td>
+					{% if family.in_division_mammals %}<td title="Present in taxonomic division mammals." class="present">Y{% else %}<td title="Absent in taxonomic division mammals." class="absent">N{% endif %}</td>
+					{% if family.in_division_rodents %}<td title="Present in taxonomic division rodents." class="present">Y{% else %}<td title="Absent in taxonomic division rodents." class="absent">N{% endif %}</td>
+					{% if family.in_division_primates %}<td title="Present in taxonomic division primates." class="present">Y{% else %}<td title="Absent in taxonomic division primates." class="absent">N{% endif %}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="members" id="members_{{ family.family_id }}">
+		<h3><a onClick="toggle_show_members(this)" href="javascript:void(0);" title="Click to show/hide list of members">Show matching members<span class="mdrsearch-status-family"></span></a></h3>
+		<div class="list">
+			{{ members|safe }}
+		</div>
+	</div>
+</div>
+	

@@ -1,0 +1,81 @@
+{% extends "agda/job/results.html" %}
+
+{% load url from future %}
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mdr/mdr.css" />
+{% endblock extra_css %}
+
+{% block sidebar %}
+{% if job.status == job_status.finished %}
+	<h4>Result files</h4>
+	<ul class='sidebar-links'>
+	<li><a href="{{ job.resultdir_url }}{{ job.result_files.hmmpfam }}">Plaintext</a></li>
+	<li><a href="{{ job.resultdir_url }}{{ job.result_files.json }}">Json</a></li>
+	<li><a href="{{ job.resultdir_url }}{{ job.result_files.query }}">Query fasta</a></li>
+	</ul>
+{% endif %}
+{{ block.super }}
+{% endblock sidebar %}
+
+{% block content_finished %}
+<p>Found {{ summary.strong_hits|default:'no' }} significant match{{ summary.strong_hits|pluralize:'es' }} and {{ summary.weak_hits|default:'no' }} 
+non-significant (detectable but insufficiently scoring) match{{ summary.weak_hits|pluralize:'es' }} in {{ summary.queries }} query sequence{{ summary.queries|pluralize }}.
+
+{% for confidence, queries in results %}
+	<div class="{{ confidence }}">
+	{% if confidence == 'weak_hits' %}
+		{% if summary.weak_hits %} 
+			<p>
+			<a onclick='toggle_display(this, "div.weak_hits", "div.hit_list")' href="javascript:void(0);" title="Click to show/hide hits below the score thresholds.">
+				Show/hide {{ summary.weak_hits }} match{{ summary.weak_hits|pluralize:'es' }} below score thresholds
+			</a>
+		{% endif %}
+		<div class="hit_list" style="display: none">
+		<div style='padding-top: 2em'></div>
+		<h3>Matches below score thresholds</h3>
+		<p>These matches indicate detectable similarity between a query and a family, but with insufficient score to qualify for proper membership.   
+	{% endif %}
+	{% for query in queries %}
+		<h3>Results for {% if not queries|length_is:1 %} sequence {{ forloop.counter }} &ndash;{% endif %} {{ query.id }}</h3>
+
+		{% if not query.families %}<p>No matches found.{% endif %}
+
+		<ul class="family-list">
+		{% for family in query.families %}
+			<li class="family">
+
+				<h4>
+					<a href="{% url 'mdr.views.family_lookup' family.id %}">{{ family.id }}{% if family.name %} &ndash; {{ family.name }}{% endif %}</a>
+					<span class="description" title="Description of a representative sequence">{{ family.representative_description }}</span>
+				</h4>
+				<ul class="inline">
+					<li>Family size: {{ family.size }}</li>
+					<li>Member scores: {{ family.min_score|floatformat }}&ndash;{{ family.max_score|floatformat }}</li>
+				</ul>
+				<ul class="hit-list">
+				{% for hit in family.hits %}
+					<li>
+						<div class="domain-graphic" style="width: {{ graphic_width }}px;">
+							<div class="backbone"> </div>
+							<a href="{% url 'mdr.views.family_lookup' family.id %}"><div class="domain{% if confidence == 'strong_hits' %} member{% endif %}" style="margin-left: {{ hit.graphic_margin }}px; width: {{ hit.graphic_width }}px;"><div class="label">{{ family.id }}</div></div></a>
+						</div>
+						<ul class="inline">
+							<li>Score: {{ hit.score }} ({{ hit.margin|floatformat }} &times; {{ family.min_score|floatformat }})</li>
+							<li>E-value: {{ hit.evalue }}</li>
+							<li>Region: {{ hit.first }}&ndash;{{ hit.last }} ({{ hit.length }}aa)</li>
+						</ul>
+					</li>
+				{% endfor %}
+				</ul>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endfor %}
+	{% if confidence == 'weak hits' and summary.weak_hits %}
+		</div> 
+	{% endif %}	
+	</div>	
+{% endfor %}
+{% endblock content_finished %}

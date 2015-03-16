@@ -1,0 +1,54 @@
+{% extends "agda/tool-page.html" %}
+
+{% block title %}{{ block.super }} query form{% endblock title %}
+{% block page-title %}Search MDR family database{% endblock page-title %}
+
+{% block content %}
+{{ block.super }}
+<div class="editform">
+	<form id="search-form" method="post">
+		<h1>Search criteria</h1>
+		{% csrf_token %}
+		<table class="fieldlist">
+			<col><col><col width="100%">
+			{% for parameter, value in criteria %}
+				<tr class="editfield">
+				  <td class="editvalue criteria-parameter">
+				    {{ parameter }}
+				    <span class="default">{{ initial }}</span>
+				    <span class="example">{{ example }}</span>
+				  </td>
+				  <td class="editvalue criteria-value">
+				    {{ value }}
+				    <span class="default">{{ field.initial }}</span>
+				    <span class="example">{{ example }}</span>
+				  </td>
+				  <td class="editerror"><ul class="errorlist">{% for e in value.errors %}<li>{{ e }}</li>{% endfor %}</ul></td>
+				</tr>
+				{% if comment %} <tr><td></td><td colspan="2" class="editcomment">{{ comment }}</td></tr>{% endif %}
+			{% endfor %}
+			<tr>
+				<td colspan="2">
+					<ul class="buttons">
+					  {% if include_reset_button %}<li><button type="reset" title="Reset all fields to default values">Reset</button></li>{% endif %}
+					  <li><button type="submit" title="{{ submit_button_text|default:'Submit' }}">{{ submit_button_text|default:'Search' }}</button></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<script>
+			var parameter_help = {{ parameter_help }};
+			$('#search-form .criteria-parameter option').each(
+				function (index) {
+					$(this).attr('title', parameter_help[this.value]);
+				}
+			)
+			update_field_title = function () {
+				$(this).closest('.editfield').find('.criteria-value input').attr('title', parameter_help[this.value]);
+			};
+			$('#search-form .criteria-parameter select').each(update_field_title);
+			$('#search-form .criteria-parameter select').change(update_field_title);
+		</script>
+	</form>
+</div>
+{% endblock content %}

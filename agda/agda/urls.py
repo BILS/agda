@@ -25,4 +25,5 @@ urlpatterns += patterns('',
     ('^results/', include('jobs.urls')),
     ('^api/results/', include('jobs.urls_api')),
     ('', include('profiles.urls')),
+    ('', include('mdr.urls')),
 )

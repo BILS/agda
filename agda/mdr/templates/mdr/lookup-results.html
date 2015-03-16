@@ -1,0 +1,28 @@
+{% extends "agda/package-page.html" %}
+
+{% block title %}MDR family details{% endblock title %}
+{% block content_title %}MDR family details{% endblock content_title %}
+
+{% block stylesheet %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mdr/family-list.css" />
+{% endblock stylesheet %}
+
+{% block extra_js %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}scripts/mdr/toggle-show-members.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}scripts/mdr/hit-counter.js"></script>
+{% endblock extra_js %}
+
+{% block content %}
+<div class="mdrsearch-status"></div>
+<script>
+	HierarchicalHitCounter(document, 
+		['.member', '.family'], 
+		['member', 'family'], 
+		['.mdrsearch-status-family', '.mdrsearch-status'], 
+		[' ({1}{0})', 'Searching{0} found {1} {2} in {3} {4}.'], 
+		[' ({1})', 'Done. Found {1} {2} in {3} {4}.']).auto_update().done_when_ready();
+</script>
+{{ hits|safe }} 
+{% endblock content %}

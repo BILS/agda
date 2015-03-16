@@ -1,0 +1,24 @@
+<div class="member">
+	<h4>%(family_id)s-%(rank)s: %(uniprot_ac)s/%(start)s-%(stop)s<span> - %(description)s</span></h4>
+	<div class="left">
+		<h5>Information</h5>
+		<span class="property">Rank: <span>%(rank)s/%(family_size)s</span></span>
+		<span class="property">Score: <span>%(score)s</span></span>
+		<span class="property">Location: <span>%(start)s-%(stop)s</span></span>
+		<span class="property">Domain length: <span>%(length)s</span></span>
+	</div>
+	<div class="middle">
+		<h5>UniProt</h5>
+		<span class="property">Database: <span>%(source_database)s</span></span>
+		<span class="property">Accession/ID: <span><a href="http://www.uniprot.org/uniprot/%(uniprot_ac)s" target="_new">%(uniprot_ac)s|%(uniprot_id)s</a></span></span>
+		<span class="property">Sequence: <span><a href="http://www.uniprot.org/uniprot/%(uniprot_ac)s.fasta" target="_new" title="FASTA sequence for %(uniprot_ac)s">FASTA</a></span></span>
+		<span class="property">Sequence length: <span>%(sequence_length)s</span></span>
+	</div>
+	<div class="right">
+		<h5>Taxonomy</h5>
+		<span class="property">Species: <span>%(species)s</span></span>
+		<span class="property">Common name: <span>%(species_common_name)s</span></span>
+		<span class="property">Kingdom: <span>%(kingdom)s</span></span>
+		<span class="property">Division: <span>%(taxonomic_division)s</span></span>
+	</div>
+</div>
