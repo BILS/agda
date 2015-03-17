@@ -11,7 +11,7 @@
 {% endblock content_title %}
 
 {% block sidebar %}
-<h4>{{ tool.nickname }}&nbsp;job</h4>
+<h4>{{ tool.displayname }}&nbsp;job</h4>
 <ul class='sidebar-links'>
 {% if not job.user %}<li><a title="Take ownership of this job." href="{% url 'jobs.views.take_job' job.slug %}">Take</a></li>{% endif %}
 <li><a title="Delete this job and all result files." href="{% url 'jobs.views.delete_job' job.slug %}">Delete</a></li>

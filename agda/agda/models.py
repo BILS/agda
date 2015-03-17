@@ -149,72 +149,19 @@ def api_get_available_tools(user):
     return [t for t in _tools.values() if t.api_available(user)]
 
 
-class Tool(object):
-    """
-    A tool is a specific job to run. Tools should be owned by a Package.
-    """
-    def __init__(self, name, nickname, description, css_name=None, view=None,
-                 api_view=None, package=None, results_view=None,
-                 api_results_view=None):
-        if css_name is None:
-            css_name = name.replace('/', '-')
-        self.name = name
-        self.css_name = css_name
-        self.nickname = nickname
-        self.description = description
-        self.view = view
-        self.results_view = results_view
-        self.api_view = api_view
-        self.api_results_view = api_results_view
-        self.package = package
-
-    def register(self):
-        """
-        Calls register_tool(self) to register the tool with the internal
-        tool registry
-        """
-        register_tool(self)
-
-    def url(self):
-        """Returns the URL for the tool. For use in templates"""
-        return reverse(self.view, None)
-
-    def results_url(self, slug):
-        """Returns the URL for the result view."""
-        return reverse(self.results_view, args=[slug])
-
-    def available(self, user):
-        """
-        Checks whether the tool is available to the user.
-
-        Returns
-        -------
-        Boolean : True only if tool has a view and if the user has access to
-        the associated package.
-        """
-        if self.package:
-            return bool(self.view and self.package.available(user))
-        return self.view
-
-    def api_available(self, user):
-        """
-        Checks whether the api interface is available for the specific user.
-
-        Returns
-        -------
-        Boolean : True only if tool has an api_view and if the user has access
-        to the associated package.
-        """
-        if self.package:
-            return bool(self.api_view and self.package.available(user))
-        return self.api_view
-
-
 class Package(object):
     """
     A package is a collection of tools. Usually it's just a django app.
+
+    Attributes:
+      view (str): Main view of package
+      name (str): Internal name
+      displayname (str): Name used in templates
+      description (str): A short description of the package
+      css_name (str): A css prefix (TODO Deprecate)
+      permission (?):
     """
-    def __init__(self, view=None, name=None, nickname=None, description=None,
+    def __init__(self, view=None, name=None, displayname=None, description=None,
                  css_name=None, tools=None, permission=None):
         if tools is None:
             tools = []
@@ -224,7 +171,7 @@ class Package(object):
         self.css_name = css_name
         self.view = view
         self.name = name
-        self.nickname = nickname
+        self.displayname = displayname
         self.description = description
         self.permission = permission
 
@@ -301,4 +248,77 @@ class Package(object):
         Currently unimplemented
         """
         pass
+
+
+class Tool(object):
+    """
+    A tool is a specific job to run. Tools should be owned by a Package.
+
+    Attributes:
+      view (str): Main view of tool
+      results_view (str): View of the result of the tool
+      api_view (str): View for the tool api
+      api_results_view (str): View for the tool api
+      name (str): Internal name
+      displayname (str): Name used in templates
+      description (str): A short description of the package
+      css_name (str): A css prefix (TODO Deprecate)
+      permission (?):
+    """
+    def __init__(self, name, displayname, description, css_name=None, view=None,
+                 api_view=None, package=None, results_view=None,
+                 api_results_view=None):
+        if css_name is None:
+            css_name = name.replace('/', '-')
+        self.name = name
+        self.css_name = css_name
+        self.displayname = displayname
+        self.description = description
+        self.view = view
+        self.results_view = results_view
+        self.api_view = api_view
+        self.api_results_view = api_results_view
+        self.package = package
+
+    def register(self):
+        """
+        Calls register_tool(self) to register the tool with the internal
+        tool registry
+        """
+        register_tool(self)
+
+    def url(self):
+        """Returns the URL for the tool. For use in templates"""
+        return reverse(self.view, None)
+
+    def results_url(self, slug):
+        """Returns the URL for the result view."""
+        return reverse(self.results_view, args=[slug])
+
+    def available(self, user):
+        """
+        Checks whether the tool is available to the user.
+
+        Returns
+        -------
+        Boolean : True only if tool has a view and if the user has access to
+        the associated package.
+        """
+        if self.package:
+            return bool(self.view and self.package.available(user))
+        return self.view
+
+    def api_available(self, user):
+        """
+        Checks whether the api interface is available for the specific user.
+
+        Returns
+        -------
+        Boolean : True only if tool has an api_view and if the user has access
+        to the associated package.
+        """
+        if self.package:
+            return bool(self.api_view and self.package.available(user))
+        return self.api_view
+
         # return [t for t in self._tools if t.api_available(user)]

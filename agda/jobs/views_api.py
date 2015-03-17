@@ -20,7 +20,7 @@ from agda.views import (require_nothing, api_require_nothing, json_response,
 
 def api_generic_show_results(request, job):
     job_info = model_dict(job, ['id', 'parameters', 'status', 'status_name', 'submission_date', 'start_date', 'completion_date'])
-    job_info['tool'] = job.tool.nickname
+    job_info['tool'] = job.tool.displayname
     job_info['job'] = job.slug
     if job.status == JOB_STATUS_LEVEL_FINISHED:
         _url = lambda path: request.build_absolute_uri(os.path.join(job.resultdir_url, path))
@@ -43,7 +43,7 @@ def api_list_jobs(request):
     def job_info(job):
         info = model_dict(job, ['id', 'status', 'status_name', 'submission_date', 'start_date', 'completion_date'])
         info['results'] = request.build_absolute_uri(reverse(api_show_results, args=[job.slug]))
-        info['tool'] = job.tool.nickname
+        info['tool'] = job.tool.displayname
         return info
     return json_response([job_info(j) for j in jobs], default=json_datetime_encoder)
 

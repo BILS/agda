@@ -435,7 +435,7 @@ class Job(models.Model, AgdaModelMixin):
         diff = ModelDiffer(self)
         try:
             if not name:
-                name = self.tool.nickname + ' job'
+                name = self.tool.displayname + ' job'
             self.name = name
             self.status = JOB_STATUS_LEVEL_SUBMITTED
             self.submission_date = datetime.now()

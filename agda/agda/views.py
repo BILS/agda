@@ -249,12 +249,12 @@ def api_list_tools(request):
 @require_nothing
 def list_tools(request):
     available = get_available_tools(request.user)
-    available.sort(key=lambda tool: tool.nickname.lower())
+    available.sort(key=lambda tool: tool.displayname.lower())
     return render(request, 'agda/list-tools.html', dict(tools=available))
 
 
 @require_nothing
 def list_packages(request):
     available = get_available_packages(request.user)
-    available.sort(key=lambda package: package.nickname.lower())
+    available.sort(key=lambda package: package.displayname.lower())
     return render(request, 'agda/list-packages.html', dict(packages=available))

@@ -6,7 +6,7 @@
 {% block content %}
 <ul>
 {% for package in packages %}
-<li><a href="{{ package.url }}">{{ package.nickname }}</a>{% if package.description %} &ndash; {{ package.description }}{% endif %}</li>
+<li><a href="{{ package.url }}">{{ package.displayname }}</a>{% if package.description %} &ndash; {{ package.description }}{% endif %}</li>
 {% endfor %}
 </ul>
 {% endblock content %}

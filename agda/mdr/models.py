@@ -16,7 +16,7 @@ import parse_mdrscan
 mdr_package = Package(
     view='mdr.views.top',
     name='mdr',
-    nickname='MDR',
+    displayname='MDR',
     description='MDR family database and tools.')
 mdr_package.register()
 
@@ -25,21 +25,21 @@ mdrscan_tool = mdr_package.new_tool(
     results_view='mdr.views.scan_results',
     api_view='mdr.views.api_scan',
     name='mdr/mdrscan',
-    nickname='MDRScan',
+    displayname='MDRScan',
     description='Scan a sequence and classify any known present MDR domains.')
 
 mdrsearch_tool = mdr_package.new_tool(
     view='mdr.views.search',
     api_view='mdr.views.api_search',
     name='mdr/mdrsearch',
-    nickname='MDRSearch',
+    displayname='MDRSearch',
     description='Search the MDR database.')
 
 mdrlookup_tool = mdr_package.new_tool(
     view='mdr.views.family_lookup',
     api_view='mdr.views.api_family_lookup',
     name='mdr/mdrlookup',
-    nickname='MDRLookup',
+    displayname='MDRLookup',
     description='Show information on an MDR family.')
 
 

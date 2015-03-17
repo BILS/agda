@@ -11,7 +11,7 @@
 	<p>If this is a job that you have run anonymously you may take ownership of it by clicking the button below.
 	<table>
 		<tr><td>Name</td><td>{{ job.name }}</td></tr>
-		<tr><td>Tool</td><td><a href="{{ job.tool.url }}">{{ job.tool.nickname }}</a></td></tr>
+		<tr><td>Tool</td><td><a href="{{ job.tool.url }}">{{ job.tool.displayname }}</a></td></tr>
 		<tr><td>Status</td><td>{{ job.status_name }}</td></tr>
 		<tr><td>Submission time</td><td>{{ job.submission_date }}</td></tr>
 		<tr><td>Completion time</td><td>{{ job.completion_date }}</td></tr>

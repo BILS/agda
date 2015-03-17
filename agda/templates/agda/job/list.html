@@ -30,7 +30,7 @@
             <a href="{% url 'jobs.views.rename_job' job.slug %}" title="Rename"><img src="{{ STATIC_URL }}images/edit/edit_16.png"></a>
 			<a href="{% url 'jobs.views.delete_job' job.slug %}" title="Delete"><img src="{{ STATIC_URL }}images/delete/delete_16.png"></a> 
 		</td>
-		<td><a href="{{ job.tool.url }}">{{ job.tool.nickname }}</a></td>
+		<td><a href="{{ job.tool.url }}">{{ job.tool.displayname }}</a></td>
 		<td class="{% if job.status == job_status.finished %} success-label {% endif %}{% if job.status < 0 %} error-label {% endif %}">{{ job.status_name }}</td>
 		<td><span class="small">{{ job.submission_date|agda_date }}</span></td>
         {# <td><span class="small">{{ job.start_date|agda_date }}</span></td> #}

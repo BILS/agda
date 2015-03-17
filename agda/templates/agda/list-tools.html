@@ -6,8 +6,8 @@
 {% block content %}
 <ul>
 {% for tool in tools %}
-<li><a href="{{ tool.url }}">{{ tool.nickname }}</a>
-	{% if tool.package %} (<a {% if tool.package.description %}title="{{ tool.package.description }}"{% endif %} href="{{ tool.package.url }}">{{ tool.package.nickname }}</a>){% endif %}
+<li><a href="{{ tool.url }}">{{ tool.displayname }}</a>
+	{% if tool.package %} (<a {% if tool.package.description %}title="{{ tool.package.description }}"{% endif %} href="{{ tool.package.url }}">{{ tool.package.displayname }}</a>){% endif %}
 	{% if tool.description %} &ndash; {{ tool.description }} {% endif %}</li>
 {% endfor %}
 </ul>
