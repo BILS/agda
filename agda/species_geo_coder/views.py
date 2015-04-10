@@ -33,8 +33,11 @@ class ToolView(FormView):
         job = SpeciesGeoCoderJob.objects.select_for_update().get(pk=job.id)
         job.log_create(request.user, 'Created in web interface.')
 
-        ## Some stuff..
-        job.submit(request.user, request.META['REMOTE_ADDR'], form.cleaned_data['name'], self.request.FILES)
+        verbose = form.cleaned_data['verbose']
+        occurences = form.cleaned_data['occurences']
+        plot = form.cleaned_data['plot']
+        job.submit(request.user, request.META['REMOTE_ADDR'], form.cleaned_data['name'],
+                self.request.FILES, occurences, verbose, plot)
 
         return redirect('jobs.views.show_results', job.slug)
 

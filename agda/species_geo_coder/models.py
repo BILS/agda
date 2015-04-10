@@ -40,10 +40,16 @@ class SpeciesGeoCoderJob(Job):
     )
     tool = tool_1
 
-    def on_submit(self, files, *args, **kwargs):
+    def on_submit(self, files, occurences, verbose, plot, *args, **kwargs):
         # Takes stuff from args and kwargs to generate submission
         script = 'runner.sh'
-        self.write_workfile(script, render_to_string('species_geo_coder/runner.sh', self.files))
+
+        run_script_parameters = self.files.copy()
+        run_script_parameters['verbose'] = verbose
+        run_script_parameters['plot'] = plot
+        run_script_parameters['occurences'] = occurences
+
+        self.write_workfile(script, render_to_string('species_geo_coder/runner.sh', run_script_parameters))
         job_script = self.workfile(script)
 
         self.write_workfile(self.files['localities'], files['localities'].read() )
@@ -51,6 +57,14 @@ class SpeciesGeoCoderJob(Job):
 
         res = self.files
         res['runner'] = script
+
+        if plot:
+            for str in ['barchart_per_polygon', 'barchart_per_species',
+                    'heatplot_coexistence', 'map_samples_overview',
+                    'map_samples_per_polygon', 'map_samples_per_species',
+                    'number_of_species_per_polygon']:
+                res[str] = "%s.pdf" % str
+
         self.result_files = res
 
         slurm.submit(self, job_script)
