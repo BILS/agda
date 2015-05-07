@@ -45,15 +45,15 @@ from jobs.models import (JOB_STATUS_LEVEL_ACCEPTED,
                          JOB_STATUS_LEVEL_FINISHED,
                          get_job_or_404)
 
-from models import (Family,
+from .models import (Family,
                     MDRScanJob,
                     Member,
                     mdr_package,
                     mdrlookup_tool,
                     mdrscan_tool,
                     mdrsearch_tool)
-import parse_mdrscan
-import scan_examples
+from mdr import parse_mdrscan
+from mdr import scan_examples
 
 
 def mdr_params(request, *args, **kw):
@@ -136,7 +136,7 @@ def api_scan(request):
         return HttpResponse(status=400)
     try:
         entries = clean_fasta(data['query'])
-    except ValidationError, e:
+    except ValidationError as e:
         return json_response(dict(complaints=str(e)), status=422)
     job = MDRScanJob(status=JOB_STATUS_LEVEL_ACCEPTED)
     job.save()

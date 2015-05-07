@@ -11,7 +11,7 @@ from agda.models import Package
 from agda.query import MySQLFulltextSearchQuerySet
 from jobs.models import Job, slurm
 
-import parse_mdrscan
+from mdr import parse_mdrscan
 
 mdr_package = Package(
     view='mdr.views.top',
