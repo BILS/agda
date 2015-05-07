@@ -263,7 +263,8 @@ def json_field_wrapper(name, json_default=None):
     return property(getter, setter)
 
 
-@transaction.commit_manually()
+#@transaction.commit_manually()
+@transaction.atomic()
 def update_status_for_jobs(user, job_query_set):
     """Update status for multiple jobs.
 
@@ -309,7 +310,7 @@ class Job(models.Model, AgdaModelMixin):
     slug = models.CharField(max_length=Slug.length, unique=True)
     user = models.ForeignKey(AUTH_USER_MODEL, blank=True, null=True)  # Blank for anonymous jobs.
     name = models.TextField(blank=True, null=True)
-    submission_ip = models.IPAddressField(blank=True, null=True)
+    submission_ip = models.GenericIPAddressField(blank=True, null=True)
     submission_date = models.DateTimeField('submission date', blank=True, null=True)
     start_date = models.DateTimeField('start date', blank=True, null=True)
     completion_date = models.DateTimeField('completion date', blank=True, null=True)
@@ -371,7 +372,7 @@ class Job(models.Model, AgdaModelMixin):
         """
         if dirtype not in ('error', 'results', 'work'):
             raise ValueError('no such dirtype')
-        os.mkdir(get_jobdir(self.slug, dirtype), 0750)
+        os.mkdir(get_jobdir(self.slug, dirtype), 0o750)
 
     def remove_jobdir(self, dirtype):
         if dirtype not in ('error', 'results', 'work'):
@@ -411,7 +412,7 @@ class Job(models.Model, AgdaModelMixin):
         else:
             dir = os.path.dirname(dst)
             if not os.path.isdir(dir):
-                os.makedirs(dir, 0750)
+                os.makedirs(dir, 0o750)
             shutil.copy2(src, dst)
 
     def submit(self, user, submission_ip, name, *args, **kw):

@@ -24,12 +24,12 @@ def user_profile(request):
 
 class CaseInsensitiveDict(dict):
     def __getitem__(self, key):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             key = key.lower()
         return super(CaseInsensitiveDict, self).__getitem__(key)
 
     def __setitem__(self, key, value):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             key = key.lower()
         return super(CaseInsensitiveDict, self).__setitem__(key, value)
 
@@ -38,6 +38,6 @@ def job_status_levels(request):
     """Case insensitive job status level lookup in templates."""
     lookup = CaseInsensitiveDict(job_states)
     for state_code, name in job_states.items():
-        if isinstance(name, basestring):
+        if isinstance(name, str):
             lookup[name.lower()] = state_code
     return dict(job_status=lookup)

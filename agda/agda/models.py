@@ -7,7 +7,7 @@ from django.contrib.admin.models import (ADDITION,
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_str
 from django.utils.text import get_text_list
 
 logger = logging.getLogger(__name__)
@@ -75,7 +75,7 @@ class AgdaModelMixin:
             CHANGE: "Changed",
             DELETION: "Deleted"
         }.get(action_flag, "?")
-        message = force_unicode(message)
+        message = force_str(message)
         logger.info(u"%s:  %s %s %s - %s" % (user.email,
                                              action,
                                              self._meta.verbose_name,
@@ -86,14 +86,14 @@ class AgdaModelMixin:
         self.log_action(ADDITION,
                         user,
                         message,
-                        force_unicode(self),
+                        force_str(self),
                         )
 
     def log_change(self, user, message=""):
         self.log_action(CHANGE,
                         user,
                         message,
-                        force_unicode(self),
+                        force_str(self),
                         )
 
     def log_delete(self, user, object_repr, message=""):

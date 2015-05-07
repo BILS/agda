@@ -42,7 +42,7 @@ class ManagingQuerySet(QuerySet):
 
 def get_fulltext_indexes(model):
     indexes = model.fulltext_indexes
-    if isinstance(indexes, (basestring, models.Field)):
+    if isinstance(indexes, (str, models.Field)):
         indexes = dict(default=(indexes,))
     elif isinstance(indexes, (tuple, list)):
         return dict(default=indexes)
@@ -120,7 +120,7 @@ def setup_fulltext_index(model, fields, index_name='fulltext_default'):
     current_columns = [row[i] for row in rows(cursor)]
     if current_columns == index_columns:
         return
-    print "Creating fulltext search index %s for %s" % (index_name, meta.db_table)
+    print( "Creating fulltext search index %s for %s" % (index_name, meta.db_table) )
     if current_columns:
         sql = "DROP INDEX %s ON %s" % (_q(index_name), _q(meta.db_table))
         cursor.execute(sql)

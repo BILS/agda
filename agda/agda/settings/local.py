@@ -1,6 +1,6 @@
 """Development settings and globals."""
 
-from base import *  # noqa
+from .base import *  # noqa
 
 PRODUCTION = False
 ########## DEBUG CONFIGURATION
@@ -17,10 +17,12 @@ TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ########## END EMAIL CONFIGURATION
 
-
-TEMPLATE_DIRS += (
-    '%s/lib/python2.7/site-packages/debug_toolbar/templates' % get_env_variable("VIRTUAL_ENV"),
-)
+try:
+    TEMPLATE_DIRS += (
+        '%s/lib/python2.7/site-packages/debug_toolbar/templates' % get_env_variable("VIRTUAL_ENV"),
+    )
+except ImproperlyConfigured:
+    pass
 
 
 ########## TOOLBAR CONFIGURATION

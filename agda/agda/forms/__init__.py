@@ -127,7 +127,7 @@ class FormContents(list):
                 self[-1]['advanced'] = True
 
     def index(self, key):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             for i, value in enumerate(self):
                 if getattr(value.get('field'), 'name', None) == key:
                     return i
@@ -145,7 +145,7 @@ class FormContents(list):
         return self.find(**kw) >= 0
 
     def insert(self, key, item):
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             key = self.index(key)
         super(FormContents, self).insert(key, item)
 
@@ -248,7 +248,7 @@ class DynamicSearchForm(forms.Form):
             try:
                 # Get and call cleaner with (queryset, field_name, value)
                 qs = cleaners.get(p, self.default_cleaner)(qs, p, v)
-            except ValidationError, e:
+            except ValidationError as e:
                 self._errors[self.val(i)] = self.error_class(e.messages)
                 del self.cleaned_data[self.val(i)]
                 del self.cleaned_data[self.par(i)]
@@ -426,15 +426,15 @@ def clean_kingdom(queryset, field_name, value):
 # General cleaners #
 
 class FastaCleaner(object):
-    chars = string.letters
-    id_chars = (string.letters + string.digits +
+    chars = string.ascii_letters
+    id_chars = (string.ascii_letters + string.digits +
                 '|'  # commonly used db|ac|id separator.
                 '_'  # commonly used in uniprot ITM2A_HUMAN ids.
                 '-'  # common sliceoform P765V62-1 indicator
                 '.'  # common sequence version indicator P765V62.3
                 '/'  # common sequence range indicator ITM2A_HUMAN/32-57
                 )
-    description_chars = (string.letters + string.digits +
+    description_chars = (string.ascii_letters + string.digits +
                          string.punctuation.replace('`', '').replace('$', '') +
                          " \t"  # Whitespace.
                          "\x01"  # Header separator.
@@ -463,7 +463,7 @@ class FastaCleaner(object):
     def clean(self, plaintext):
         try:
             plaintext = str(plaintext)
-        except UnicodeError, e:
+        except UnicodeError:# as e:
             raise ValidationError('Sequence seems to contain illegal characters.')
         try:
             try:
@@ -472,7 +472,7 @@ class FastaCleaner(object):
                 if not self.default_id:
                     raise
                 entries = fasta.entries((">%s\n" % self.default_id) + plaintext)
-        except fasta.FastaError, e:
+        except fasta.FastaError as e:
             raise ValidationError(e.message)
 
         plural = lambda num: 's' if num > 1 else ''

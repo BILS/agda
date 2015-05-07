@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 import re
-from StringIO import StringIO
+from io import StringIO
 
 GAP_CHARACTERS = '-.'
 
@@ -114,7 +114,7 @@ class FastaEntry(object):
         The length of the whitespace between the ID and description (if
         present) carries no information and will therefore be ignored.
         """
-        if isinstance(fasta_sequence, basestring):
+        if isinstance(fasta_sequence, str):
             fasta_sequence = StringIO(fasta_sequence)
         fasta_sequence = iter(fasta_sequence)
         self = cls()
@@ -278,7 +278,7 @@ def iter_entries(fasta, plaintext=False):
     to return plaintext entries rather than parsed ones.
 
     """
-    if isinstance(fasta, basestring):
+    if isinstance(fasta, str):
         fasta = StringIO(fasta)
     lines = []
     build_entry = lambda lines: ''.join(lines) if plaintext else parse_sequence(lines)

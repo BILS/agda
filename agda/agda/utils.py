@@ -74,7 +74,7 @@ def rows(cursor):
 def get_columns(model, fields):
     columns = []
     for field in fields:
-        if isinstance(field, basestring):
+        if isinstance(field, str):
             field = model._meta.get_field(field, many_to_many=False)
         columns.append(field.column)
     return columns

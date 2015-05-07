@@ -20,7 +20,7 @@ def get_cracklib_complaints(password):
     def _fascist_check(pw):
         try:
             cracklib.FascistCheck(pw)
-        except ValueError, e:
+        except ValueError as e:
             return str(e)
 
     if _fascist_check("bad") != "it is WAY too short":

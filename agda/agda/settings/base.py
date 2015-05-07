@@ -61,6 +61,7 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('Jonas Hagberg', 'jonas.hagberg@bils.se'),
     ('Johan Viklund', 'johan.viklund@bils.se'),
+    ('Frédéric Haziza', 'frederic.haziza@bils.se'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -69,6 +70,7 @@ MANAGERS = ADMINS
 
 
 SUPPORT_EMAIL = 'johan.viklund@bils.se'
+#SUPPORT_EMAIL = 'tools-portal@bils.se' # Better suited and forwarded to the right person
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
@@ -194,7 +196,7 @@ CACHED_UPLOAD_DIR = os.path.join(PROJECT_ROOT, 'upload')
 CACHED_UPLOAD_VIEW = 'agda.views.review_cached_upload'
 
 # We don't want execute permissions on uploaded stuff.
-FILE_UPLOAD_PERMISSIONS = 0644
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 
 ########## STATIC FILE CONFIGURATION
@@ -320,7 +322,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     # Database migration helpers:
-    'south',
+    #'south',
     'django_extensions',
 )
 

@@ -221,7 +221,7 @@ def script_data(data):
 
 def stream(*parts):
     for part in parts:
-        if isinstance(part, basestring):
+        if isinstance(part, str):
             part = [part]
         for text in part:
             yield text
