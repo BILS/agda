@@ -1,5 +1,6 @@
 # Python bytecode:
-*.py[co]
+*.py[cod]
+**/__pycache__/
 
 # Packaging files:
 *.egg*
@@ -13,6 +14,7 @@ _build
 
 # SQLite3 database files:
 *.db
+*.sqlite
 
 # Logs:
 *.log
