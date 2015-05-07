@@ -1,7 +1,5 @@
 {% extends "agda/tool-page.html" %}
 
-{% load url from future %}
-
 {% block title %}
 {{ block.super }}{% if job.status == job_status.finished %} Results {% else %} job {{ job.status_name|lower }}{% endif %}
 {% endblock title %}
