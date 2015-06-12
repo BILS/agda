@@ -12,21 +12,11 @@
 {% endblock scripts %}
 
 {% block content %}
-{{ job.result_files }} 
 {% if job.status == job_status.finished %}
 	<h4>Result files</h4>
 	<ul class='sidebar-links'>
-	<li><a href="{{ job.resultdir_url }}{{ job.result_files.runner }}">Runscript</a></li>
-	<li><a href="{{ job.resultdir_url }}{{ job.result_files.localities }}">Localities</a></li>
-	<li><a href="{{ job.resultdir_url }}{{ job.result_files.polygons }}">Polygons</a></li>
-	<li><a href="{{ job.resultdir_url }}{{ job.result_files.outfile }}">Result</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.barchart_per_polygon }}">barchart_per_polygon</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.barchart_per_species }}">barchart_per_species</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.heatplot_coexistence }}">heatplot_coexistence</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.map_samples_overview }}">map_samples_overview</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.map_samples_per_polygon }}">map_samples_per_polygon</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.map_samples_per_species }}">map_samples_per_species</a></li>
-    <li><a href="{{ job.resultdir_url }}{{ job.result_files.number_of_species_per_polygon }}">number_of_species_per_polygon</a></li>
+	<li><a href="{{ job.resultdir_url }}{{ job.result_files.outfile }}">Nexus file</a></li>
+    <li><a href="{{ job.resultdir_url }}{{ job.result_files.plot }}">Plots (zip file)</a></li>
 	</ul>
 {% endif %}
 {% endblock content %}
