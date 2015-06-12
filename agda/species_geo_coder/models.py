@@ -59,11 +59,7 @@ class SpeciesGeoCoderJob(Job):
         res['runner'] = script
 
         if plot:
-            for str in ['barchart_per_polygon', 'barchart_per_species',
-                    'heatplot_coexistence', 'map_samples_overview',
-                    'map_samples_per_polygon', 'map_samples_per_species',
-                    'number_of_species_per_polygon']:
-                res[str] = "%s.pdf" % str
+            res['plot'] = 'plots.zip'
 
         self.result_files = res
 

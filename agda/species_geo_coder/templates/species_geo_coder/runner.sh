@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+
+module load R/3.2.0
+module load gdal/1.11.2
+module load geos/3.4.2
+module load species_geo_coder/git
 
 set -e
 
@@ -6,14 +11,11 @@ function logg() {
 	echo $(date +%Y%m%d-%H%M:) "$*"
 }
 
-#export R_LIBS=/home/johan/rlibs1
+echo "Geocoder is in: $(which geocoder.py)"
 
-GEOCODERDIR=/home/johan/speciesgeocoder-0.9.3
+GEOCODERDIR=$(dirname $(which geocoder.py))
 
-source $GEOCODERDIR/geoenv/bin/activate
-export R_LIBS=/home/johan/rlibs1
-
-python $GEOCODERDIR/geocoder.py \
+geocoder.py \
     --path_script $GEOCODERDIR \
     -l {{localities}} \
     -p {{polygons}} \
@@ -23,6 +25,14 @@ python $GEOCODERDIR/geocoder.py \
     > {{outfile}}
 
 {% if plot %}
+zip plots.zip \
+    barchart_per_polygon.pdf \
+    barchart_per_species.pdf \
+    heatplot_coexistence.pdf \
+    map_samples_overview.pdf \
+    map_samples_per_polygon.pdf \
+    map_samples_per_species.pdf \
+    number_of_species_per_polygon.pdf
 #'barchart_per_polygon', 'barchart_per_species',
 #                    'heatplot_coexistence', 'map_samples_overview',
 #                    'map_samples_per_polygon', 'map_samples_per_species',
