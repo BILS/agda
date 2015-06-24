@@ -3,9 +3,18 @@
 {% block title %}{{ tool.displayname }} Submit job{% endblock title %}
 
 {% block content %}
-<p>Scan a peptide sequence to find and classify any known MDR domains. Please give sequences in fasta format. 
+<p>Make a geographic analysis.
+<p>The localities file should be in a format specified in <a
+href="https://raw.githubusercontent.com/mtop/speciesgeocoder/master/example_data/localities.csv">this
+file</a>. And the polygon data should look like <a
+href="https://raw.githubusercontent.com/mtop/speciesgeocoder/master/example_data/polygons.txt">this</a>.
+A tutorial for generating this type of files can be found <a
+href="https://github.com/mtop/speciesgeocoder/wiki/Tutorial-for-creating-polygons-in-QGIS">here</a>.
+
+<!--
 <p>You can also <a onclick="resetValues($('#scan_form')[0], 'example')" title="Insert example values" href="javascript:void(0);">use some example data</a>, 
 or <a title="Insert example values" href="javascript:void(0);" onclick="resetValues($('#scan_form')[0])">reset the form</a> to default values.  
+-->
 
 {% include "agda/forms/table_form.html" with form_id="scan_form" form_heading="Submit new job" submit_button_text="Submit job" %} 
 
