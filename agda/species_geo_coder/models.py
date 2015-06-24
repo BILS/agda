@@ -55,8 +55,8 @@ class SpeciesGeoCoderJob(Job):
         self.write_workfile(self.files['localities'], files['localities'].read() )
         self.write_workfile(self.files['polygons'], files['polygons'].read() )
 
-        res = self.files
-        res['runner'] = script
+        res = dict()
+        res['outfile'] = self.files['outfile']
 
         if plot:
             res['plot'] = 'plots.zip'
