@@ -389,6 +389,11 @@ class Job(models.Model, AgdaModelMixin):
             self.make_jobdir('work')
         open(self.workfile(path), 'w').write(contents)
 
+    def make_workdir(self, path):
+        if not os.path.isdir(self.workdir):
+            self.make_jobdir('work')
+        os.mkdir(self.workfile(path), 0750)
+
     def save_resultfile(self, src, dst=None):
         """Convenience method for copying a file or directory from self.workdir
         to self.resultdir.

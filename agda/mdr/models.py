@@ -12,6 +12,7 @@ from agda.query import MySQLFulltextSearchQuerySet
 from jobs.models import Job, slurm
 
 import parse_mdrscan
+from core import fasta ## This is only for copying, stupid.
 
 mdr_package = Package(
     view='mdr.views.top',
@@ -63,6 +64,12 @@ class MDRScanJob(Job):
         self.write_workfile(script, render_to_string('mdr/mdrscan.sh', dict(db=db)))
         self.write_workfile('family_data.json', parse_mdrscan.FamilyData.dumps(Family.objects.all()))
         shutil.copy(parse_mdrscan.__file__.rstrip('oc'), self.workdir)
+
+        ## Copy the care/fasta.py thingy TODO fix this
+        self.make_workdir('core')
+        shutil.copy(fasta.__file__.rstrip('oc'), os.path.join(self.workdir, 'core'))
+        self.write_workfile('core/__init__.py', "")
+
         self.result_files = self.files
         slurm.submit(self, self.workfile(script))
 
