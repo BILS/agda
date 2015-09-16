@@ -10,7 +10,7 @@ from django.http import (Http404,
 from django.shortcuts import (get_object_or_404,
                               redirect,
                               render)
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from django.utils.text import get_text_list
 
 from agda.forms import (CleanFulltext,
@@ -292,8 +292,7 @@ def api_search(request):
 
 
 def render_search_hits(families):
-    member_template_path = loader.find_template('mdr/search-member-simple.html')[0].origin.name
-    member_template = open(member_template_path).read()
+    member_template = open(abspath(SITE_ROOT, 'mdr/templates/mdr/search-member-simple.html')).read()
     for name, family in sorted(families.iteritems()):
         pre, post = render_and_split('mdr/search-family.html', ['members'], dict(family=family))
         yield pre
