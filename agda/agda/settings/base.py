@@ -330,6 +330,7 @@ LOCAL_APPS = (
     'profiles',
     'jobs',
     'mdr',
+    'datisca',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

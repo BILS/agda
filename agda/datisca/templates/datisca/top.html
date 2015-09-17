@@ -1,0 +1,28 @@
+{% extends 'agda/package-page.html' %}
+
+{% block sidebar_package_menuitems %}
+	{{ block.super }}
+	<li><a title="Sequence files and blast databases" href="{{ DATA_URL }}datisca/2012.1/">Downloads</a></li>
+{% endblock sidebar_package_menuitems %}
+
+{% block content %}
+<p>Tools and databases related to the Datisca glomerata nodule transcriptome project.
+
+<p>The data files produced in this project are also available for download:
+<ul>
+	<li>
+		Sequencing reads: 
+		<a href="{{ DATA_URL }}datisca/2012.1/data_454_sequence_tp.fa">fasta</a> /
+		<a href="{{ DATA_URL }}datisca/2012.1/data_454_sequence_tp.fa.blastdb.tar.gz">blast database</a>.
+	</li>
+	<li>Contigs:
+		<a href="{{ DATA_URL }}datisca/2012.1/trinity_plus_454.fa.cap.contigs.fa">fasta</a> /
+		<a href="{{ DATA_URL }}datisca/2012.1/trinity_plus_454.fa.cap.contigs.fa.blastdb.tar.gz">blast database</a>.
+	</li>
+	<li>Trinity_assembly:
+		<a href="{{ DATA_URL }}datisca/2012.1/trinity_assembly.fa">fasta</a> /
+		<a href="{{ DATA_URL }}datisca/2012.1/trinity_assembly.fa.blastdb.tar.gz">blast database</a>.
+	</li>
+</ul>
+{% endblock content %}
+

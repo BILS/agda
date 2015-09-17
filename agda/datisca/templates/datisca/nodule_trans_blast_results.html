@@ -1,0 +1,72 @@
+{% extends "agda/job/results.html" %}
+
+{% block stylesheet %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/datisca/datisca.css" />
+{% endblock stylesheet %}
+
+{% block sidebar %}
+{% if job.status == job_status.finished %}
+	<h3>Result files</h3>
+    <ul class='sidebar-links'>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.hits }}">Hits (fasta)</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.blast }}">Plaintext</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.json }}">Json</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.query }}">Query fasta</a></li>
+	</ul>
+{% endif %}
+{{ block.super }}
+{% endblock sidebar %}
+
+{% block content_finished %}
+<script>
+// Works around the !important setting in bootstrap for the hidden class
+function myToggle(toggleLink, hiddenObject) {
+    if ( hiddenObject.hasClass("hidden") ) {
+        hiddenObject.removeClass("hidden").hide()
+    }
+    hiddenObject.toggle("fast")
+    toggleLink.onclick = function() { hiddenObject.toggle("fast") }
+}
+</script>
+	<p>Results for {{ job.parameters.program }} in database {{ job.parameters.db|capfirst }} with 
+	maximum E-value {{ job.parameters.evalue }}, with a total of {{ job.statistics.characters }} characters
+	in {{ job.statistics.sequences }} sequence{{ job.statistics.sequences|pluralize }}.
+	Please click hits to show / hide alignments.
+	
+	{% for query in results.queries %}
+		<h2>Hits for {{ query.id }}</h2>
+		<a onclick='myToggle(this,$(this).nextAll(".blasthits").find(".alignment"))' href="javascript:void(0);" title="Click to show/hide alignments.">
+			Show / hide all alignments.
+		</a>
+		<table class="blasthits">
+			<tr>
+				<th>Hit</th>
+				<th><span title="Expectation value: lower is better.">E-value</span></th>
+			</tr>
+		{% for hit in query.hits %}
+			<tr>
+				<td>
+					<a class="nohover" onclick='myToggle(this,$(this).closest("tr").next("tr").find(".alignment"))' href="javascript:void(0);">
+						<div class="domain-graphic" style="width: {{ graphic_width }}px;" title="Matching parts of query sequence.">
+							<div class="backbone"></div>
+							{% for region in hit.regions %}
+								<div class="good domain" style="margin-left: {{ region.graphic_start }}px; width: {{ region.graphic_width }}px;"></div>
+							{% endfor %}
+						</div>
+					</a>
+					<a onclick='myToggle(this,$(this).closest("tr").next("tr").find(".alignment"))' href="javascript:void(0);" title="Click to show/hide alignments.">
+						{{ hit.id }}
+					</a>
+				</td>
+				<td><span title="Expectation value: lower is better.">{{ hit.evalue }}</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<pre class="hidden alignment">{{ hit.alignments }}</pre>
+				</td>
+			</tr>
+		{% endfor %}
+		</table>
+	{% endfor %}
+{% endblock content_finished %}
