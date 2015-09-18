@@ -1,0 +1,74 @@
+PconsC plugin by Joel Hedlund <joel@nsc.liu.se> 
+
+PconsC by Marcin Skwark <marcin@skwark.pl> et al:
+http://www.ncbi.nlm.nih.gov/pubmed/23658418
+
+Plugin requested by Arne Elofsson <arne@bioinfo.se>. 
+https://support.snic.vr.se/Ticket/Display.html?id=83262
+
+
+Plan
+====
+1. Install pconsc and depencdencies on fido.
+2. Create minimal, private RESTful api that only delivers result file.
+3. Validation with requestor, to see that it works as intended.
+4. Parse results. Extract an executive summary of the most relevant parts, and attach to results.
+5. (plugin specific) Generate 2d heat map plot of the contact scores.
+6. Create rudimentary, private pointy-clicky browser interface.
+7. Iterate design with requestors, until happy.
+8. Publication, upon go-ahead from requestor.
+
+
+Activity log
+============
+Started app in new fido branch, created this file, and pushed back to repo:
+git branch pconsc
+git checkout pconsc
+python manage.py startapp pconsc
+git add pconsc
+git commit
+git push
+
+Sent plan to requestors and stakeholders. Requested known needed info from requestors straight away 
+(eg: test data, intro text, citations, links and whatever they want to go into the service).
+
+Installed HMMER according to recipe in /software/apps/hmmer/3.1b1/build01/nsc.
+Installed MCR (Matlab compiler runtime) with installer input from /software/apps/mcr/2012b/dist/installer_input.fido. 
+Installed plmDCA by building a standalone on trioloith using Matlab's deploytool, wrapping it to point to the right MCR.
+Installation available in /software/apps/plmdca/2012/build01. Modulefile available in /software/cmod/modulefile/plmdca/2012-build01.
+Installed PSICOV according to recipe in /software/apps/psicov/1.11/build02/nsc (with patch to allow low-complexity alignments).
+Installed HHSuite according to recipe in /software/apps/hhsuite/2.0.16/build01/nsc.
+
+Cloned PconsC from git@github.com:mskwark/pconsc.git.
+
+Patched source in branch nsc to work better on a server. Changes:
+1. Not hardcode paths to dependency binaries in source, but use PATH.
+2. Not hardcode paths to databases in source, but use args.
+3. Not hardcode number of cores in source, take default (=all cores) from multiprocessing, and add command line option -c to let user control it.
+4. Launch plmdca by script, which removes requirement for a complete matlab install, with accompanying licensing issues.
+5. Fix mixing of tab/space indentation.
+6. Remove bogus requirement for blast formatted jackhammr database files.
+7. Exit with nonzero exit status on error.
+
+Added module for pconsc/git. Will add one for a snapshot once source stabilizes.
+
+Add templates/pconsc/predictall.sh.
+
+Example data supplied by Robert Pilstål <ropil@ifm.liu.se>, example1 in examples.py.
+Logged onto worker node gkar and verified that installation could produce output with predictall.sh and the example data. 
+
+Permissions detour:
+* Added modelless_permissions app to work around that django permissions are tied to models. 
+* added permissions to tools and packages, as a list of strings that can be passed to user.has_perms() to check that the user has all necessary permissions.   
+
+Add pconsc group, package and permission in models.py.
+Add pconsc/predictall tool. 
+Add PredictallJob in models.py. 
+Add parse_pconsc.py.
+Add templates/pconsc/predictall.sh.
+
+Add views/api_predictall, accessible at url api/pconsc/predictall. This takes sequence and name and returns plaintext results.
+Add views/predictall, accessible at url pconsc/predictall. This does the same thing for pointyclicky, and has file uploads as well.
+
+Add filesystem caching of results to PredictallJob. Results from successful jobs are cached for a year based on sequence + paths to databases.
+

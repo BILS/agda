@@ -1,0 +1,17 @@
+{% extends 'agda/package-page.html' %}
+{% load url from future %}
+
+{% block content %}
+<p>Random forest prediction of contacts in protein tertiary structure from primary structure.
+
+<p>PconsC <a href="{% url 'pconsc.views.predictall' %}">PredictAll</a> takes a protein sequence as indata. 
+Jackhmmer and HHblits are then used to generate alignments at various levels of confidence of homology.
+For each alignment, contact predictions are made using PSICOV and plmDCA. The combined output is 
+then used as basis for a random forest evaluation, which produces the final result. 
+
+<p>More information available on: <a href="http://c.pconsc.net">http://c.pconsc.net</a>.
+
+<p>PconsC is available from github: git://github.com/mskwark/pconsc.git
+
+{% endblock content %}
+

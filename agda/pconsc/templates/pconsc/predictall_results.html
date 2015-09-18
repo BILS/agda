@@ -1,0 +1,98 @@
+{% extends "agda/job/results.html" %}
+
+{% load url from future %}
+
+{% block sidebar %}
+{% if job.status == job_status.finished %}
+	<h3>Result files</h3>
+	<ul>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.query }}" title="Query sequence in fasta format.">Query fasta</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" title="Contact prediction in png format.">Contact map</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.layer4 }}" title="Contact prediction in plaintext.">Plaintext</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.log }}" title="PconsC log output.">Logfile</a></li>
+		<li><a href="{{ job.resultdir_url }}{{ job.result_files.intermediaries }}" title="All intermediary predictions; conservation profiles, secondary structure, images, results and logfiles, as a compressed archive.">Intermediaries</a></li>
+	</ul>
+{% endif %}
+{{ block.super }}
+{% endblock sidebar %}
+
+{% block content_unfinished %}
+	{% if job.status == job_status.running %} 
+		<p>Your job is currently running (reload page to refresh status):
+		<p><textarea id="pconsc_log" readonly rows=25 style='width:100%'>Preparing databases...
+{{ pconsc_log_text }}</textarea> 
+		<script language="javascript">
+			var textarea = document.getElementById('pconsc_log');
+			textarea.scrollTop = textarea.scrollHeight;
+		</script>
+	{% else %} 
+		<p>Your job has been accepted and is currently waiting to be run. 
+	{% endif %}
+	<p>Link to this page: <b><a href={{ request.build_absolute_uri }}>{{ request.build_absolute_uri }}</a></b> 
+	<p>Please come back to this page later to check the results. <span id="reload_countdown">
+	<script><!--
+	document.write(page_reload_countdown.msg({{ timeout }}));
+	page_reload_countdown($("#reload_countdown"), {{ timeout }} * 1000);
+	//--></script></span>
+	{% if user.is_validated %}
+		<p>You can also visit your <a href="{% url 'fido.list_jobs' %}">job list</a> page to see the status of all your jobs.  
+	{% endif %}
+	<p>Remember that anyone who has this link or the 
+	job ID can view your results, so keep it private and only share it with those you wish to see the results. 
+	<p>Your results will only remain on the server for as long as available storage permits, so be sure to download 
+	all important results before they are deleted.
+{% endblock content_unfinished %}
+
+
+{% block content_finished %}
+{% if job.result_files.layer4_image %}
+<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}"/></a>
+<p>Download results: <a href="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" title="Contact prediction in png format.">image</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer4 }}" title="Contact prediction in plaintext.">text</a>,
+   <a href="{{ job.resultdir_url }}{{ job.result_files.log }}" title="PconsC log output.">logfile</a>, or
+   all <a href="{{ job.resultdir_url }}{{ job.result_files.intermediaries }}" title="All intermediary predictions; conservation profiles, secondary structure, images, results and logfiles, as a compressed archive.">intermediary predictions</a>.
+<p><a onclick='toggle_display(this,"#content",".details")' href="javascript:void(0);" title="Click to show/hide details.">Show / hide details.</a>
+<div class="hidden details">
+	<h2>Details</h2>
+
+	<h3>Conservation based</h3>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.out }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.image }}" title="Contact prediction in png format.">image</a>. 
+	<p><a onclick='toggle_display(this,".details")' href="javascript:void(0);" title="Click to hide details.">Hide details.</a>
+
+	<h3>With secondary structure predictions</h3>
+	<h4>ANN layer 0</h4>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer0_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer0_image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.layer0 }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer0_image }}" title="Contact prediction in png format.">image</a>. 
+	<h4>ANN layer 1</h4>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer1_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer1_image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.layer1 }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer1_image }}" title="Contact prediction in png format.">image</a>. 
+	<h4>ANN layer 2</h4>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer2_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer2_image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.layer2 }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer2_image }}" title="Contact prediction in png format.">image</a>. 
+	<h4>ANN layer 3</h4>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer3_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer3_image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.layer3 }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer3_image }}" title="Contact prediction in png format.">image</a>. 
+	<h4>ANN layer 4</h4>
+	<p><a href="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" /></a>
+	<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.layer4 }}" title="Contact prediction in plaintext.">text</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.layer4_image }}" title="Contact prediction in png format.">image</a>. 
+	<p><a onclick='toggle_display(this, ".details"' href="javascript:void(0);" title="Click to hide details.">Hide details.</a>
+
+</div>
+
+{% elif job.result_files.image2 %}
+
+<p><a href="{{ job.resultdir_url }}{{ job.result_files.image }}" title="PconsC2 contact map"><img src="{{ job.resultdir_url }}{{ job.result_files.image2 }}"/></a>
+<p>Download results: <a href="{{ job.resultdir_url }}{{ job.result_files.image2 }}" title="Contact prediction in png format.">image</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.out2 }}" title="Contact prediction in plaintext.">text</a>,
+
+   <a href="{{ job.resultdir_url }}{{ job.result_files.log }}" title="PconsC log output.">logfile</a>, or
+   all <a href="{{ job.resultdir_url }}{{ job.result_files.intermediaries }}" title="All intermediary predictions; conservation profiles, secondary structure, images, results and logfiles, as a compressed archive.">intermediary predictions</a>.
+
+<p><a onclick='toggle_display(this,"#content",".details")' href="javascript:void(0);" title="Click to show/hide details.">Show / hide details.</a>
+<div class="hidden details">
+<p><a href="{{ job.resultdir_url }}{{ job.result_files.image }}" title="Contact prediction in png format."><img src="{{ job.resultdir_url }}{{ job.result_files.image }}"/></a>
+<p>Download: <a href="{{ job.resultdir_url }}{{ job.result_files.image }}" title="Contact prediction in png format.">image</a> / <a href="{{ job.resultdir_url }}{{ job.result_files.out }}" title="Contact prediction in plaintext.">text</a>,
+</div>
+{% endif %}
+
+
+{% endblock content_finished %}
