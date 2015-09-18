@@ -27,4 +27,5 @@ urlpatterns += patterns('',
     ('', include('profiles.urls')),
     ('', include('mdr.urls')),
     ('', include('datisca.urls')),
+    ('', include('pconsc.urls')),
 )

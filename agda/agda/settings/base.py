@@ -331,6 +331,7 @@ LOCAL_APPS = (
     'jobs',
     'mdr',
     'datisca',
+    'pconsc',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
