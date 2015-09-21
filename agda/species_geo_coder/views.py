@@ -14,7 +14,7 @@ from species_geo_coder.models import tool_1
 # Create your views here.
 
 class IndexView(TemplateView):
-    template_name = 'agda/package-page.html'
+    template_name = 'species_geo_coder/index.html'
 
     def get_context_data(self, *args, **kw):
         context = super(IndexView, self).get_context_data(**kw)

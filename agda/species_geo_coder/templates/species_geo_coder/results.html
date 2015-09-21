@@ -14,6 +14,8 @@
 	<h4>Result files</h4>
 	<ul class='sidebar-links'>
 	<li><a href="{{ job.resultdir_url }}{{ job.result_files.outfile }}">Nexus file</a></li>
+    {% if job.result_files.plot %} <!-- Only show if there are some plots! -->
     <li><a href="{{ job.resultdir_url }}{{ job.result_files.plot }}">Plots (zip file)</a></li>
+    {% endif %}
 	</ul>
 {% endblock content_finished %}

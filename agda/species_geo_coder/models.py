@@ -16,7 +16,7 @@ app_package = Package(
     view        = 'species_geo_coder.views.top',
     name        = 'SpeciesGeoCoder',
     displayname = 'SpeciesGeoCoder',
-    description = 'Map based stuff',
+    description = 'A tool for large scale biogeographical data analysis',
 )
 app_package.register()
 
