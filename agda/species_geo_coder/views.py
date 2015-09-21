@@ -1,6 +1,7 @@
 #from django.shortcuts import render
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import redirect, render
+from django.db import transaction
 
 from agda.views import package_template_dict
 from jobs.models import (JOB_STATUS_LEVEL_ACCEPTED,
@@ -24,6 +25,7 @@ class ToolView(FormView):
     template_name = 'species_geo_coder/speciesgeocoder.html'
     form_class    = SpeciesGeoCoderForm
 
+    @transaction.atomic
     def form_valid(self, form):
         request = self.request
 
@@ -41,12 +43,12 @@ class ToolView(FormView):
 
         return redirect('jobs.views.show_results', job.slug)
 
+@transaction.atomic
 def tool_1_results(request, slug):
     job = get_job_or_404(slug=slug, select_for_update=True)
     job.update_status(request.user)
     params = dict(job=job, tool=tool_1)
     return render(request, 'species_geo_coder/results.html', params)
-
 
 #class ToolResultView(TemplateView):
 #    template_name = '<app>/tool_result.html'

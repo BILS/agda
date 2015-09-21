@@ -4,6 +4,6 @@ from .views import IndexView, ToolView
 
 urlpatterns = patterns('',
     url(r'^$', IndexView.as_view(), name='species_geo_coder.views.top'),
-    url(r'^tool$', ToolView.as_view(), name='species_geo_coder.views.tool_1'),
+    url(r'^/tool$', ToolView.as_view(), name='species_geo_coder.views.tool_1'),
     #(r'^mdr/scan/$', 'scan'),
 )
