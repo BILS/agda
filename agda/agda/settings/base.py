@@ -332,6 +332,7 @@ LOCAL_APPS = (
     'mdr',
     'datisca',
     'pconsc',
+    'species_geo_coder',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -28,4 +28,5 @@ urlpatterns += patterns('',
     ('', include('mdr.urls')),
     ('', include('datisca.urls')),
     ('', include('pconsc.urls')),
+    ('speciesgeocoder', include('species_geo_coder.urls')),
 )
