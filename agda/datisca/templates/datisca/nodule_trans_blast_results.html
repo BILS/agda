@@ -35,6 +35,9 @@ function myToggle(toggleLink, hiddenObject) {
 	Please click hits to show / hide alignments.
 	
 	{% for query in results.queries %}
+        {% if query.hits|length < 1 %}
+        <h2>No hits for {{ query.id }}</h2>
+        {% else %}
 		<h2>Hits for {{ query.id }}</h2>
 		<a onclick='myToggle(this,$(this).nextAll(".blasthits").find(".alignment"))' href="javascript:void(0);" title="Click to show/hide alignments.">
 			Show / hide all alignments.
@@ -67,6 +70,8 @@ function myToggle(toggleLink, hiddenObject) {
 				</td>
 			</tr>
 		{% endfor %}
+
 		</table>
+    {% endif %}
 	{% endfor %}
 {% endblock content_finished %}
