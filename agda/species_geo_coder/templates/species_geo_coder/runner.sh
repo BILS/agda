@@ -22,7 +22,7 @@ geocoder.py \
     {% if verbose %} -v {% endif %} \
     {% if plot %} --plot {% endif %} \
     {% if occurences > 1 %} -n {{occurences}} {% endif %} \
-    > {{outfile}}
+    --out {{outfile}}
 
 {% if plot %}
 zip plots.zip \
