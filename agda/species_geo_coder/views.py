@@ -1,4 +1,6 @@
+import time
 #from django.shortcuts import render
+
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import redirect, render
 from django.db import transaction
@@ -48,6 +50,15 @@ def tool_1_results(request, slug):
     job = get_job_or_404(slug=slug, select_for_update=True)
     job.update_status(request.user)
     params = dict(job=job, tool=tool_1)
+    if job.is_alive:
+        reload_time, interval = request.session.setdefault('mdrscan', dict()).pop(job.slug, (0, 5))
+        if reload_time <= time.time():
+            reload_time = max(time.time() + 5, reload_time + interval)
+            interval *= 2
+        request.session['mdrscan'][job.slug] = (reload_time, interval)
+        request.session.modified = True
+        params.update(timeout=reload_time - time.time())
+        params.update(reload_time=reload_time, interval=interval)
     return render(request, 'species_geo_coder/results.html', params)
 
 #class ToolResultView(TemplateView):
