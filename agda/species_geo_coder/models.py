@@ -14,7 +14,6 @@ from jobs.models import Job, slurm
 # A representation of the current app
 app_package = Package(
     view        = 'species_geo_coder.views.top',
-    permission  = 'pconsc.access_predictalljob',
     name        = 'SpeciesGeoCoder',
     displayname = 'SpeciesGeoCoder',
     description = 'A tool for large scale biogeographical data analysis',
